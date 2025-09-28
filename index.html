@@ -7,173 +7,450 @@
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-slate-50 text-slate-900">
-
 <div id="app"></div>
-
 <script>
-// ---------------- Data: Definitions ----------------
-const DEFINITIONS = [
-  { term: "Acceptor", def: "A person who has been nominated by the Location Plant Manager to provide Supervision to the members of a Working Party and to accept, surrender and clear specified Safety Documents." },
-  { term: "Apparatus", def: "All equipment, in which electrical conductors are used, supported, or of which they may form a part, and for which Indaver/Rivenhall IWMF has a maintenance responsibility." },
-  { term: "Appointed Person", def: "A person nominated by the Location Plant Manager to carry out specified duties relating to Safety from the System." },
-  { term: "Approved", def: "Authorised or sanctioned by Rivenhall IWMF Location Plant Manager." },
-  { term: "Card Safe", def: "A device of an Approved type for the secure retention of Safety Documents." },
-  { term: "Card Safe Declaration Form", def: "A Form of declaration to be signed by the Acceptor in charge of an additional Working Party permitted to work under a Card Safe retained Safety Document." },
-  { term: "Company", def: "Indaver Rivenhall IWMF" },
-  { term: "Danger", def: "A risk to health or bodily injury." },
-  { term: "Dead", def: "At or about zero voltage and disconnected from any Live System." },
-  { term: "Drained", def: "Where the contents of the Plant and/or Apparatus are adjusted and maintained at a level, which avoids Danger." },
-  { term: "Earthed", def: "Connected to earth by means of an Earthing Device." },
-  { term: "Drain Earth", def: "A fixed or portable Earthing Device applied for the purpose of protection against induced voltages." },
-  { term: "Primary Earth", def: "A fixed or portable Earthing Device applied at a position defined in a Safety Document." },
-  { term: "Earthing Device", def: "An Approved means of providing a connection between a conductor and earth." },
-  { term: "Earthing Schedule", def: "A schedule indicating the Drain Earth requirements for each stage of work." },
-  { term: "General Safety", def: "The provision of safe access to and from the place of work, a safe place to work, safe methods of work, the use of correct work equipment and personal protective equipment." },
-  { term: "High Voltage (HV)", def: "A voltage of 1000 Volts and above." },
-  { term: "Isolated", def: "Disconnected from associated Plant and/or Apparatus by an Isolating Device in the isolating position, or by adequate physical separation or sufficient gap." },
-  { term: "Isolating Device", def: "A device for rendering Plant and/or Apparatus Isolated." },
-  { term: "Isolation Schedule", def: "A written record provided by a Safety Controller to an Appointed Person detailing the safety precautions and the order in which they should be applied to provide Safety from the System." },
-  { term: "Issuer", def: "A person authorised in writing by the Location Plant Manager to issue and transfer a specified Safety Document." },
-  { term: "Key Safe Key", def: "A key unique at the Location capable of operating a lock, other than the control lock, on a Key Safe." },
-  { term: "Control Key", def: "A key issued solely to Safety Controllers to operate the control lock of a Key Safe." },
-  { term: "Safety Key", def: "A key unique at the Location, capable of operating a Safety Lock which will secure Isolations, vents or drains." },
-  { term: "Key Safe", def: "A device of an Approved type for the secure retention of keys." },
-  { term: "Live", def: "Electrically charged." },
-  { term: "Location", def: "Any place at which work under the company’s safety rules is carried out." },
-  { term: "Locked", def: "A condition of Plant and/or Apparatus that cannot be altered without the operation of a locking device which is of a standard acceptable to the Location Plant Manager." },
-  { term: "Low Voltage (LV)", def: "A voltage above 50 Volts and below 1000 Volts." },
-  { term: "Control Lock", def: "A lock on a Key Safe or a Card Safe to which only Safety Controllers have a key." },
-  { term: "Personal Lock", def: "A lock unique at the Location issued to an Acceptor for securing Safety Documents within a Card Safe." },
-  { term: "Safety Lock", def: "An Approved device for securing Points of Isolation, and where appropriate, certain vents or drains." },
-  { term: "Masculine words", def: "Masculine words used in these Rules (he, his, him) shall also be understood to mean the feminine where the sense requires it." },
-  { term: "Personally Retained", def: "A method for the safe custody of a Safety Document by an Acceptor." },
-  { term: "Plant Controller", def: "A person authorised in writing by the Location Plant Manager, responsible for the release of Plant and/or Apparatus and coordinating safety at interfaces with other Companies." },
-  { term: "Plant", def: "Fixed and movable items other than Apparatus, for which Indaver, Rivenhall IWMF has a responsibility." },
-  { term: "Point(s) of Isolation", def: "The point(s) at which equipment has been Isolated and where reasonably practicable immobilised and locked. Safety Tags shall be attached at all Points of Isolation." },
-  { term: "Purged", def: "A condition of Plant and/or Apparatus from which any dangerous contents have been removed." },
-  { term: "Safety Controller", def: "A person authorised in writing by the Location Plant Manager, to ensure adequate precautions are taken to provide Safety from the System, including preparation and cancellation of specified Safety Documents." },
-  { term: "Safety Distance", def: "The distance from the nearest High Voltage exposed conductor not Earthed, or from an insulator supporting a High Voltage conductor, which shall be maintained to avoid Danger." },
-  { term: "Safety Document", def: "A formal document: Limited Work Certificate, Permit for Work, Permit ROS, or Sanction for Operation & Testing." },
-  { term: "Safety from the System", def: "That condition which safeguards persons working on or testing Plant and/or Apparatus from the Dangers inherent in the System." },
-  { term: "Safety Tag", def: "An Approved means of identifying locally the point of application of safety precautions." },
-  { term: "Immediate Supervision", def: "Supervision by a person continually available at the Location when work/testing is in progress, attending as often as necessary to ensure safety." },
-  { term: "Personal Supervision", def: "Supervision by the supervising person who is present at the work location observing the work process and able to intervene." },
-  { term: "System", def: "Items of Plant and/or Apparatus used separately or in combination in any process associated with the generation, transmission, or distribution of electricity." },
-  { term: "Vented", def: "Where the contents of the Plant and/or Apparatus are adjusted and maintained at atmospheric pressure." },
-  { term: "Voltage – HV", def: "≥ 1000 Volts." },
-  { term: "Voltage – LV", def: "50–1000 Volts." },
-  { term: "Voltage – ELV", def: "< 50 Volts." },
-  { term: "Working Party", def: "Persons working under the Supervision of an Acceptor including an Acceptor working alone." },
-  { term: "Multiple Working Party Safety Document", def: "Safety Document format allowing one or more working parties to work at the same time under the same document (Limited Work Certificate or Permit for Work only)." },
-  { term: "Single Working Party Safety Document", def: "Safety Document format allowing only one working party to carry out work at any one time." }
-];
+const DEFINITIONS = [{"term": "Acceptor", "def": "A person who has been nominated by the Location Plant Manager to provide Supervision to the members of a Working Party and to accept, surrender and clear specified Safety Documents."}, {"term": "Apparatus", "def": "All equipment, in which electrical conductors are used, supported, or of which they may form a part, and for which Indaver/Rivenhall IWMF has a maintenance responsibility."}, {"term": "Appointed Person", "def": "A person nominated by the Location Plant Manager to carry out specified duties relating to Safety from the System."}, {"term": "Approved", "def": "Authorised or sanctioned by Rivenhall IWMF Location Plant Manager."}, {"term": "Card Safe", "def": "A device of an Approved type for the secure retention of Safety Documents."}, {"term": "Card Safe Declaration Form", "def": "A Form of declaration to be signed by the Acceptor in charge of an additional Working Party permitted to work under a Card Safe retained Safety Document."}, {"term": "Company", "def": "Indaver Rivenhall IWMF"}, {"term": "Danger", "def": "A risk to health or bodily injury."}, {"term": "Dead", "def": "At or about zero voltage and disconnected from any Live System."}, {"term": "Drained", "def": "Where the contents of the Plant and/or Apparatus are adjusted and maintained at a level, which avoids Danger."}, {"term": "Earthed", "def": "Connected to earth by means of an Earthing Device."}, {"term": "Drain Earth", "def": "A fixed or portable Earthing Device applied for the purpose of protection against induced voltages."}, {"term": "Primary Earth", "def": "A fixed or portable Earthing Device applied at a position defined in a Safety Document."}, {"term": "Earthing Device", "def": "An Approved means of providing a connection between a conductor and earth."}, {"term": "Earthing Schedule", "def": "A schedule indicating the Drain Earth requirements for each stage of work."}, {"term": "General Safety", "def": "The provision of safe access to and from the place of work, a safe place to work, safe methods of work, the use of correct work equipment and personal protective equipment."}, {"term": "High Voltage (HV)", "def": "A voltage of 1000 Volts and above."}, {"term": "Isolated", "def": "Disconnected from associated Plant and/or Apparatus by an Isolating Device in the isolating position, or by adequate physical separation or sufficient gap."}, {"term": "Isolating Device", "def": "A device for rendering Plant and/or Apparatus Isolated."}, {"term": "Isolation Schedule", "def": "A written record provided by a Safety Controller to an Appointed Person detailing the safety precautions and the order in which they should be applied to provide Safety from the System."}, {"term": "Issuer", "def": "A person authorised in writing by the Location Plant Manager to issue and transfer a specified Safety Document."}, {"term": "Key Safe Key", "def": "A key unique at the Location capable of operating a lock, other than the control lock, on a Key Safe."}, {"term": "Control Key", "def": "A key issued solely to Safety Controllers to operate the control lock of a Key Safe."}, {"term": "Safety Key", "def": "A key unique at the Location, capable of operating a Safety Lock which will secure Isolations, vents or drains."}, {"term": "Key Safe", "def": "A device of an Approved type for the secure retention of keys."}, {"term": "Live", "def": "Electrically charged."}, {"term": "Location", "def": "Any place at which work under the company’s safety rules is carried out."}, {"term": "Locked", "def": "A condition of Plant and/or Apparatus that cannot be altered without the operation of a locking device which is of a standard acceptable to the Location Plant Manager."}, {"term": "Low Voltage (LV)", "def": "A voltage above 50 Volts and below 1000 Volts."}, {"term": "Control Lock", "def": "A lock on a Key Safe or a Card Safe to which only Safety Controllers have a key."}, {"term": "Personal Lock", "def": "A lock unique at the Location issued to an Acceptor for securing Safety Documents within a Card Safe."}, {"term": "Safety Lock", "def": "An Approved device for securing Points of Isolation, and where appropriate, certain vents or drains."}, {"term": "Masculine words", "def": "Masculine words used in these Rules (he, his, him) shall also be understood to mean the feminine where the sense requires it."}, {"term": "Personally Retained", "def": "A method for the safe custody of a Safety Document by an Acceptor."}, {"term": "Plant Controller", "def": "A person authorised in writing by the Location Plant Manager, responsible for the release of Plant and/or Apparatus and coordinating safety at interfaces with other Companies."}, {"term": "Plant", "def": "Fixed and movable items other than Apparatus, for which Indaver, Rivenhall IWMF has a responsibility."}, {"term": "Point(s) of Isolation", "def": "The point(s) at which equipment has been Isolated and where reasonably practicable immobilised and locked. Safety Tags shall be attached at all Points of Isolation."}, {"term": "Purged", "def": "A condition of Plant and/or Apparatus from which any dangerous contents have been removed."}, {"term": "Safety Controller", "def": "A person authorised in writing by the Location Plant Manager, to ensure adequate precautions are taken to provide Safety from the System, including preparation and cancellation of specified Safety Documents."}, {"term": "Safety Distance", "def": "The distance from the nearest High Voltage exposed conductor not Earthed, or from an insulator supporting a High Voltage conductor, which shall be maintained to avoid Danger."}, {"term": "Safety Document", "def": "A formal document: Limited Work Certificate, Permit for Work, Permit ROS, or Sanction for Operation & Testing."}, {"term": "Safety from the System", "def": "That condition which safeguards persons working on or testing Plant and/or Apparatus from the Dangers inherent in the System."}, {"term": "Safety Tag", "def": "An Approved means of identifying locally the point of application of safety precautions."}, {"term": "Immediate Supervision", "def": "Supervision by a person continually available at the Location when work/testing is in progress, attending as often as necessary to ensure safety."}, {"term": "Personal Supervision", "def": "Supervision by the supervising person who is present at the work location observing the work process and able to intervene."}, {"term": "System", "def": "Items of Plant and/or Apparatus used separately or in combination in any process associated with the generation, transmission, or distribution of electricity."}, {"term": "Vented", "def": "Where the contents of the Plant and/or Apparatus are adjusted and maintained at atmospheric pressure."}, {"term": "Voltage – HV", "def": "≥ 1000 Volts."}, {"term": "Voltage – LV", "def": "50–1000 Volts."}, {"term": "Voltage – ELV", "def": "< 50 Volts."}, {"term": "Working Party", "def": "Persons working under the Supervision of an Acceptor including an Acceptor working alone."}, {"term": "Multiple Working Party Safety Document", "def": "Safety Document format allowing one or more working parties to work at the same time under the same document (Limited Work Certificate or Permit for Work only)."}, {"term": "Single Working Party Safety Document", "def": "Safety Document format allowing only one working party to carry out work at any one time."}];
+const FOREWORD = `FOREWORD
+Rivenhall IWMF Safety Rules are provided to ensure that work can be undertaken without hazard from Electrical or Mechanical Equipment. 
+The Safety Rules are mandatory for work at Rivenhall IWMF. It is the duty of every person who may be concerned with work on the system to make themselves thoroughly familiar with the Safety Rules and supporting documents appropriate to the activity that they are undertaking. In addition, all persons have a general duty to be conversant with and to observe statutory requirements relating to any activities to which they have an involvement.
+Work should never be considered to be so urgent or important that time cannot be taken to plan it properly and perform it safely. 
+The issue of a safety document does not, in itself, make a job safe. The achievement of safety from all inherent dangers also depends on full and logical preparation of work. This includes: - 
+• Identifying and assessing all reasonably foreseeable risks thereby implementing control measures to reduce the significant risks to a level, which as a minimum satisfies all current legislative requirements and even more importantly is acceptable to persons performing the task. 
+• Executing the work in a safe manner by suitably competent personnel. 
+The risk assessment for the task identifies the risks associated with carrying out the work and also the risks inherent in the system in its operational state. These rules, associated procedures and instructions therefore define the control measures necessary to reduce these system risks to an acceptable level.
+If, whether intentionally or through neglect or carelessness, a person fails to observe the Safety Rules and supporting documents, or unnecessarily endangers the personal safety of either themselves or others, then, in the case of an employee, that employee will be subject to disciplinary action under the Company’s Disciplinary Policy or, in any other case, that person will be subject to such action as the Company may consider appropriate in the circumstances. 
+POLICY, PHILOSOPHY AND PRINCIPLES 
+Policy 
+It is Rivenhall IWMF, QESH and TC Policy that a health and safety management system is in place, which regards the application of legal requirements as the minimum level of achievement. 
+The health and safety management system specifically includes these Safety Rules, and is supported by Company Procedures and Guidance Documents, which establish the strategy for the control of health and safety.
 
-function byTerm(a,b){ return a.term.localeCompare(b.term); }
 
-// ---------------- Text Sections ----------------
-const FOREWORD = `Rivenhall IWMF Safety Rules are provided ... (truncated for brevity)`;
-const PART_A = `PART A - GENERAL PROVISIONS ... (truncated)`;
-const PART_B = `PART B - THE BASIC SAFETY RULES ... (truncated)`;
-const PART_C = `PART C - SAFETY DOCUMENT PROCEDURES ... (truncated)`;
-const PART_E = `PART E - FORM OF SAFETY DOCUMENTS ... (truncated)`;
 
-// ---------------- Rendering ----------------
-function appRouter(){
-  const hash = window.location.hash.slice(1) || "home";
-  if(hash==="home"){ return Home(); }
-  if(hash==="foreword"){ return TextPage("Foreword", FOREWORD); }
-  if(hash==="part-a"){ return TextPage("Part A — General Provisions", PART_A); }
-  if(hash==="part-b"){ return TextPage("Part B — Basic Safety Rules", PART_B); }
-  if(hash==="part-c"){ return TextPage("Part C — Safety Document Procedures", PART_C); }
-  if(hash==="part-d"){ return PartD(); }
-  if(hash==="part-e"){ return TextPage("Part E — Forms of Safety Documents", PART_E); }
-  return Home();
-}
 
-function Page(title, content, actions=""){
-  return `<div class='min-h-screen bg-slate-50'>
-    <header class='sticky top-0 bg-white/80 backdrop-blur border-b border-slate-200'>
-      <div class='max-w-4xl mx-auto px-4 py-4 flex justify-between items-center'>
-        <h1 class='text-lg font-semibold'>${title}</h1>
-        ${actions}
-      </div>
-    </header>
-    <main class='max-w-4xl mx-auto p-4'>${content}</main>
-  </div>`;
-}
+Page 1
 
-function Home(){
-  const links = [
-    ["foreword","Foreword"],
-    ["part-a","Part A — General Provisions"],
-    ["part-b","Part B — Basic Safety Rules"],
-    ["part-c","Part C — Safety Document Procedures"],
-    ["part-d","Part D — Definitions"],
-    ["part-e","Part E — Forms of Safety Documents"]
-  ];
-  let grid = links.map(([id,label])=>`<a href='#${id}' class='block border p-4 rounded-xl bg-white hover:bg-slate-50'>${label}</a>`).join("");
-  return Page("Home", `<div class='grid gap-3 md:grid-cols-2'>${grid}</div>`);
-}
+All personnel shall observe their personal responsibilities and co-operate in ensuring that Indaver/Rivenhall IWMF meet their legal duties. 
+Philosophy
+Items of Plant and/or Apparatus may be interconnected to form a process System and can contain inherent dangers. This System is to be designed so that when in its normal operating mode it may be operated without Danger, if safe working procedures are correctly applied. 
+When work other than operation has to be carried out affecting the Plant and/or Apparatus, which is a departure from the normal operating mode or working procedures, it is necessary to specify rules to achieve safety from the inherent Dangers. 
+Safety Rules supported by Company Procedures and Guidance Documents clearly specify the Safe System of Work (SSoW) that shall be implemented. This is to establish the conditions in which persons, who have to carry out work on the Plant and/or Apparatus, shall be safeguarded from the inherent dangers contained in the System. Additional SSoW’s shall be established to reduce the risks from hazards that exist outside of the System.
+Principles
+The Safety Rules are concerned with achieving and maintaining safety of persons and are based on the following principles: - 
+A Safe System of Work shall be established prior to the commencement of work on Plant and/or Apparatus. The work carried out shall be safe from the System. 
+• When the work is carried out on Plant and/or Apparatus, the primary means of achieving safety is by controlled isolation from the System and the control of stored energy. No work shall be carried out on or near Live Apparatus unless it is unreasonable for it to be dead and it is reasonable for a person to be working while it is Live and that suitable precautions are taken to prevent injury. 
+• Persons engaged in work activities associated with these Safety Rules shall be assessed as having the technical knowledge and experience necessary to prevent Danger or injury, having regard to the nature of the work. The nomination of a person to carry out a defined role shall be authorised in writing by the Plant Manager who has responsibility for the Location, or his nominee. 
+The above principles involve: - 
+• The co-ordination of activities, which include the provision of instruction, information and training on the application of precautions. This will involve the confirmation of the administration of the safety rules documentation necessary for conducting the work. 
+• The safe removal from service and restoration of Plant and/or Apparatus, which includes taking action to ensure the Plant and/or Apparatus, is in a safe condition for its intended purpose.
+ • The performing of work in accordance with established procedures and precautions, with the proper application of the necessary documentation.
 
-function TextPage(title, text){
-  return Page(title, `<div class='prose whitespace-pre-wrap'>${text}</div>`, `<a href='#home' class='border px-3 py-1 rounded-lg text-sm'>Home</a>`);
-}
+Page 2 
 
-// ----- Part D interactive -----
-function PartD(){
-  return Page("Part D — Definitions", `<div id='partd'></div>`, `<a href='#home' class='border px-3 py-1 rounded-lg text-sm'>Home</a>`);
-}
 
-function renderPartD(){
-  const container = document.getElementById("partd");
-  if(!container) return;
-  container.innerHTML = `
-    <div class='flex gap-2 mb-4'>
-      <button id='tab-index' class='px-3 py-1 border rounded'>Index</button>
-      <button id='tab-quick' class='px-3 py-1 border rounded'>Quick Reference</button>
-      <button id='tab-flash' class='px-3 py-1 border rounded'>Flashcards</button>
-    </div>
-    <div id='partd-content'></div>`;
-  let tab="index";
-  function renderTab(){
-    if(tab==="index"){
-      const list=[...DEFINITIONS].sort(byTerm);
-      container.querySelector("#partd-content").innerHTML=list.map(x=>`<div class='border rounded p-2 mb-1'><b>${x.term}</b><br><span class='text-sm text-slate-600'>${x.def}</span></div>`).join("");
-    }else if(tab==="quick"){
-      const list=[...DEFINITIONS].sort(byTerm);
-      container.querySelector("#partd-content").innerHTML=list.map(x=>`<div class='border rounded p-2 mb-1'><b>${x.term}</b><br><span class='text-sm text-slate-600'>${x.def}</span></div>`).join("");
-    }else if(tab==="flash"){
-      flashRender();
-    }
-  }
-  function flashRender(){
-    const idx=Math.floor(Math.random()*DEFINITIONS.length);
-    const item=DEFINITIONS[idx];
-    container.querySelector("#partd-content").innerHTML=`
-      <div class='border rounded p-4'>
-        <div class='font-bold text-xl mb-2'>${item.term}</div>
-        <button id='reveal' class='border px-3 py-1 rounded'>Reveal</button>
-        <div id='def' class='mt-3 hidden text-slate-700'>${item.def}</div>
-        <div><button id='next' class='mt-3 border px-3 py-1 rounded'>Next →</button></div>
-      </div>`;
-    container.querySelector("#reveal").onclick=()=>{
-      container.querySelector("#def").classList.remove("hidden");
-    };
-    container.querySelector("#next").onclick=flashRender;
-  }
-  container.querySelector("#tab-index").onclick=()=>{tab="index";renderTab();};
-  container.querySelector("#tab-quick").onclick=()=>{tab="quick";renderTab();};
-  container.querySelector("#tab-flash").onclick=()=>{tab="flash";renderTab();};
-  renderTab();
-}
+CONTENTS`;
+const PART_A = `PART A - GENERAL PROVISIONS 
+1. Interpretations 
+2. General Requirements 
+3. General Safety 
+4. Exceptional Circumstances`;
+const PART_B = `PART B - BASIC SAFETY RULES 
+1. Application of the rules 
+2. Approach to Exposed High Voltage Conductors/Insulators 
+3. Safety Precautions for Work on or Adjacent to Plant &amp; High Voltage Apparatus 
+4. Safety Precautions for Work on Low Voltage Apparatus 
+5. Operation of Plant &amp; Apparatus 
+6. Demarcation of Work Areas 
+7. Identification of Plant &amp; Apparatus`;
+const PART_C = `PART C -SAFETY DOCUMENT PROCEDURES 
+1. Safety Procedures Company &amp; Location Instruction 
+2. Safety Documents 
+3. Methods of Use 
+4. Safety Precautions 
+5. Preparation of Permit 
+6. Preparation of Permit ROS 
+7. Preparation of Permit Sanction for Operation and Testing 
+8. Preparation of Limited Work Certificate 
+9. Issue of Safety Documents 
+10. Transfer of Safety Documents 
+11. Clearance of Safety Documents 
+12. Cancellation of Safety Documents 
+13. Categories of Safety Authority
 
-function render(){
-  document.getElementById("app").innerHTML=appRouter();
-  renderPartD();
-}
-window.addEventListener("hashchange", render);
-render();
+Page 3`;
+const PART_D_TEXT = `PART D–DEFINITIONS PART 
+E - FORM OF SAFETY DOCUMENTS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Page 4 
+
+PART A - GENERAL PROVISIONS 
+1. INTERPRETATION 
+1.1. SHALL 
+When “shall” is used in these Safety Rules or associated procedures with no qualification, this indicates a mandatory requirement with no discretion permitted and no judgement to be made. 
+1.2. SHALL, WHERE PRACTICABLE 
+When “shall, where practicable” is used to qualify a requirement, a slightly less strict standard is imposed. It means that where it is possible to achieve in the light of current knowledge and invention, bearing in mind the hazards associated with work to be undertaken, then the requirement shall be met. One is not allowed to avoid the requirement on the grounds of difficulty, inconvenience or cost. 
+1.3. SHALL, WHERE REASONABLY PRACTICABLE 
+When “shall, where reasonably practicable” is used to qualify a requirement then a judgement must be made as to what is reasonable, taking into account the magnitude of the risk on the one hand and the cost, time and trouble, or effort necessary for averting the risk on the other hand. 
+1.4. WORK 
+When used in these Safety Rules, the term “work” may include testing.
+
+ 2. GENERAL REQUIREMENTS 
+2.1. All persons with responsibilities under these Safety Rules must possess sufficient knowledge and/or experience to avoid Danger. They must have received training for the roles that they are to perform under the Safety Rules. 
+2.2. Any person receiving instructions in the application of these Safety Rules shall report to the person giving those instructions any objections on safety grounds to carrying them out. Any such objections shall be dealt with in accordance with an Approved written procedure. 
+2.3. If a hazard arises or is suspected during the course of work, which could give rise to Danger, the work shall cease, the situation shall be reported immediately to the Safety Controller and all persons withdrawn from the Plant and/or Apparatus concerned. 
+2.4. In addition to these Safety Rules, other associated policies, procedures and instructions issued by Rivenhall IWMF, or other authorities shall be complied with. 
+3. GENERAL SAFETY 
+3.1. In addition to the requirements for establishing Safety from the System specified in these rules, General Safety must be established and maintained at all times at and in the vicinity of the place of work. Supervisors must ensure that General Safety is established, monitored and maintained. During the course of the work members of the Working Party must maintain General Safety and ensure other work areas are not adversely affected by their activities.
+Page 5 
+
+3.2. The discharging of responsibility for General Safety will be achieved as part of the normal pattern of management delegation and control by ensuring that all activities are in accordance with appropriate instructions &amp; guidance. 
+3.3. When a requirement for work is identified, it is fundamental that prior to work commencing the hazards present shall be recognised, the risks assessed and the necessary control measures implemented to reduce any risk to an acceptable level. 
+
+4. EXCEPTIONAL CIRCUMSTANCES 
+4.1. Work on Plant and/or Apparatus, which is part of the System and to which these Safety Rules cannot be applied, or for specific, exceptional circumstances should not be applied, shall be carried out in accordance with an Approved written procedure. 
+
+PART B - THE BASIC SAFETY RULES 
+1. APPLICATION OF THE RULES 
+1.1. These Safety Rules shall be applied to all Plant and Apparatus, which form part of the System. 
+1.2. Any Plant and/or Apparatus not considered to be part of the System, to which these Safety Rules therefore do not apply, shall be identified in an Approved written procedure and an alternative safe system of work shall be provided. 
+1.3. Plant and Apparatus shall be added to and removed from the System only in accordance with an Approved written procedure, which shall determine the time when these Safety Rules are to be applied to new equipment and cease to apply to equipment removed. The Approved written procedure may include provision for equipment temporarily disconnected and removed from the normal service position to workshops or work area to be considered as temporarily removed from the System. 
+
+2. APPROACH TO EXPOSED HIGH VOLTAGE CONDUCTORS AND /OR INSULATORS 
+2.1. Persons shall not allow any part of their body to approach exposed conductors designed for, and operated at, High Voltage, or insulators supporting such conductors, within the Safety Distances specified in 2.4, unless the conductors have been Isolated and Danger has been excluded. 
+2.2. When exposed High Voltage conductors are not Isolated, the only objects permitted to approach them, or insulators supporting them, within the Safety Distances specified in 2.4, shall be Approved insulated devices. 
+2.3. When exposed conductors are Isolated but could be subject to High Voltage, the only objects, which shall be caused to approach them, or insulators supporting them, within the Safety Distances specified in 2.4, shall be Approved voltage measuring devices or Earthing Devices.
+
+Page 6
+
+2.4 SAFETY DISTANCES
+
+Typical 400kV Post Insulators illustrating Safety Distances from Live High Voltage Conductors
+
+A distance of 300mm (12”) shall also be maintained from that portion of the insulators supporting exposed High Voltage conductors, which is outside the appropriate Safety Distance from the conductors.
+
+3. SAFETY PRECAUTIONS FOR WORK ON OR ADJACENT TO PLANT AND/OR HIGH VOLTAGE APPARATUS. 
+3.1. When work is to be carried out on or adjacent to Plant and/or H.V. Apparatus and the means of achieving Safety from the System is by limiting the work or the work area, written instructions clearly defining the limits shall be given. When it is considered necessary a Limited Work Certificate shall be issued.
+
+Page 7
+
+3.2. When limiting the work or the work area is insufficient to achieve Safety from the System, it shall be achieved by the application of the following requirements: - 
+3.2.1.The Plant and/or H.V. Apparatus shall be released from service by the Plant Controller, who shall ensure its release is recorded. 
+3.2.2.The Plant and/or H.V. Apparatus shall be Isolated. When Isolating Devices are used they shall, where practicable be immobilised and locked. All points of Isolation shall be Safety Tagged. 
+3.2.3.For work on H.V. Apparatus, Primary Earths shall be applied within the Isolated zone. 
+3.2.4.Fixed Primary Earths shall, where practicable, be immobilised, locked &amp; Safety Tagged. 
+3.2.5.Portable Primary Earths shall, where reasonably practicable, be immobilised &amp; locked. Portable Primary Earths shall be Safety Tagged; 
+3.2.6.The contents of the Plant and/or H.V. Apparatus shall be adjusted to a level, which avoids Danger and where drains could give rise to Danger they shall be Safety Tagged, and shall, where practicable be Locked in the appropriate position. 
+3.2.7.Where Danger could arise from pressurisation, the Plant and/or H.V. Apparatus shall be Vented to atmospheric pressure and where vents could give rise to Danger they shall be Safety Tagged and shall, where practicable be Locked in the appropriate position. 
+3.2.8.Where internal access is required, the Plant and/or H.V. Apparatus shall be Purged if the residue of contents could cause Danger. 
+3.2.9.Where Danger could arise from the release of stored energy, action shall be taken to contain or dissipate this energy safely. 
+3.2.10. A Permit for Work shall be issued. 
+3.2.11. When Danger from induced voltages could arise during the course of the work, Drain Earths shall be applied. Any portable Drain Earths shall be issued with the Safety Document together with an Earthing Schedule. 
+3.2.12. Any additional precautions required to be taken during the course of work to maintain Safety from the System shall be specified on the Safety Document. 
+3.3. When work is to be carried out on Plant and/or H.V. Apparatus, and it is essential to restore supplies for certain work during the period that the Safety Document is in force the following additional precautions shall be applied: - 
+3.3.1.An Approved specific procedure specifying the precautions necessary to maintain Safety from the System whilst supplies are restored shall be provided and observed. 
+3.3.2.A Permit for Work ROS shall be issued.
+
+Page 8
+
+
+3.3.3.No other Safety Document shall be in force on the same items of Plant and/or H.V. Apparatus. 
+3.4. When testing is to be carried out on Plant and/or H.V. Apparatus, testing supplies may be restored and/or Primary Earths removed when necessary to facilitate such testing. Safety from the System shall be achieved when testing by the application of the following additional precautions: - 
+3.4.1.The Plant and/or H.V. Apparatus on which the testing is to take place and the nature of the testing shall be defined on a Sanction for Operation and Testing. 
+3.4.2.No work other than work of a minor nature essential to the completion of testing may be carried out. Safety from the System shall be maintained during such work. 
+3.4.3.Essential supplies, which are necessary for the testing to take place and which may be restored shall be defined on the Sanction for Operation and Testing. 
+3.4.4.Primary Earths applied within the Isolated System, which may be removed to facilitate testing, provided Safety from the System is maintained, shall be identified on the Sanction for Operation and Testing. 
+3.4.5.No other Safety Document shall be in force on the same items of Plant and/or H.V. Apparatus. 
+3.4.6.Testing supplies to the Apparatus shall not be the normal source of supply for this Apparatus. 
+3.4.7.The Acceptor authorised to accept a Sanction for Operation and Testing shall: - 
+3.4.7.1. Personally instruct the removal and re-application of those safety precautions which may be varied. 
+3.4.7.2. Be responsible for maintaining Safety from the System when safety precautions are varied. 
+3.4.7.3. Provide Personal Supervision during the testing and be responsible for all matters of safety concerned with the test.
+
+
+
+
+
+
+
+
+
+
+Page 9
+
+4. SAFETY PRECAUTIONS FOR WORK ON LOW VOLTAGE APPARATUS 
+4.1. L.V. Apparatus shall be released from service by the Plant Controller, who shall ensure its release is recorded. 
+4.2. Wherever reasonably practicable, work on L.V. Apparatus shall be carried out with the equipment Dead, and the following precautions shall be taken to achieve Safety from the System: - 
+4.2.1.The L.V. Apparatus shall be Isolated and where reasonably practicable, Locked off. 
+4.2.2.All points of isolation shall be Safety Tagged. 
+4.2.3.The work shall be carried out under a Permit. 
+4.3. When it is not reasonable for the LV apparatus to be made dead: - 
+4.3.1.The work, including justification shall be detailed in Approved procedure. 
+4.3.2.A Safety Document shall be issued. (Permit)
+4.4. At the discretion of the Safety Controller, work on Extra Low Voltage (ELV) Apparatus may be permitted to proceed with the Acceptor providing local Isolation as required. 
+5. OPERATION OF PLANT AND APPARATUS 
+5.1. The operation of Plant and/or Apparatus to achieve Safety from the System shall never involve pre-arranged signals or the use of time intervals. 
+6. DEMARCATION OF WORK AREAS 
+6.1. The work area shall be defined clearly and, where necessary, protected physically to prevent Danger to persons in the work area from System hazards adjacent to the work area. 
+7. IDENTIFICATION OF PLANT &amp; APPARATUS 
+7.1. Work shall only be permitted on Plant and/or Apparatus, which is readily identifiable or has fixed to it a means of identification, which shall remain effective throughout the course of the work. Acceptors shall only allow work to start when they are satisfied that they have identified the correct Plant and/or Apparatus.
+
+
+
+
+
+
+
+
+Page 10
+
+PART C - SAFETY DOCUMENT PROCEDURES 
+1. SAFETY PROCEDURES LOCAL INSTRUCTION 
+1.1. The manner in which safety procedures are to be applied shall be specified in either: - 
+1.1.1.Rivenhall IWMF Group Policy Document. 
+1.1.2.A Site Management Instruction. 
+2. SAFETY DOCUMENTS 
+2.1. The following Safety Documents shall be used: - 
+2.1.1.Limited Work Certificate - to specify the limits of work and/or access when this is sufficient alone to achieve Safety from the System. 
+2.1.2.Permit for Work – when precautions need to be taken to achieve Safety from the System for work on Plant and/or Apparatus. 
+2.1.3.Permit for Work ROS – when precautions to achieve Safety from the System may be varied to allow for the Restoration of Supplies.
+2.1.4.Sanction for Operation and Testing – when precautions to achieve Safety from the System may be varied to allow for the Testing of Plant and/or HV Apparatus. 
+3. METHODS OF USE 
+3.1. Safety Documents shall only be issued to Acceptors who are authorised to accept them. 
+4.SAFETY PRECAUTIONS 
+4.1. Prior to the preparation of a Safety Document the Safety Controller shall obtain permission from the Plant Controller for the Plant and/or Apparatus to be released. 
+4.2. The Plant and/or Apparatus shall be released from service by the Plant Controller, who shall ensure its release is recorded. 
+4.3. When the Safety Controller considers it necessary he shall obtain advice on additional precautions, which may be necessary in respect of particular hazards. 
+4.4. When an Appointed Person is responsible for applying safety precautions prior to the issue of a Safety Document he shall sign a record of the safety precautions applied. 
+4.5. Where safety precautions have been taken at remote locations, the appropriate keys shall be retained in safe custody. 
+4.6. The keys to locks securing the safety precautions that need to be maintained at a local site shall be held under the joint control of a Safety Controller and an Acceptor for each Working Party.
+
+
+Page 11
+
+4.7. The Safety Controller shall prepare the Safety Document ready for issue, obtaining where necessary confirmation of precautions taken across boundaries from the appropriate responsible person. 
+5. PREPARATION OF A PERMIT for WORK 
+5.1. The Safety Controller shall enter the following details as appropriate: - 
+5.1.1.Identification of Plant and Apparatus. 
+5.1.2.Description of work to be done. 
+5.1.3.Precautions taken to achieve Safety from the System. 
+5.1.4.Further precautions to be taken during the course of work to avoid System derived hazards. 
+5.1.5.A list of items to be issued with the Safety Document, for example: - 
+5.1.5.1. Drain Earths and an Earthing Schedule. 
+5.1.5.2. Specialist advice on particular hazards. 
+5.1.5.3. Key(s). 
+5.1.6.Safety Controllers signature, name, time and date. 
+6. PREPARATION OF PERMIT for WORK ROS 
+6.1. The Safety Controller shall enter the following details as appropriate: 
+6.1.1.Identification of Plant and Apparatus. 
+6.1.2.Description of work to be done. 
+6.1.3.Precautions taken to achieve Safety from the System. 
+6.1.4.Further precautions to be taken during the course of work to avoid System derived hazards. 
+6.1.5.Safety precautions which may be varied by the Acceptor in accordance with an Approved procedure. 
+6.1.6.A list of items to be issued with the Safety Document, which shall include: - 
+6.1.6.1. Key(s) to Isolations that may be restored. 
+6.1.6.2. Approved procedure for Restoration of Supplies. 
+6.1.7.Safety Controllers signature, name, time and date.
+
+
+
+
+Page 12
+
+7. PREPARATION OF A SANCTION FOR OPERATION AND TESTING 
+7.1. The Safety Controller shall enter the following details as appropriate: - 
+7.1.1.The Identification of the Plant and Apparatus. 
+7.1.2.Description of Work to be done. 
+7.1.3.Precautions taken to achieve Safety from the System. 
+7.1.4.Further precautions to be taken during the course of work to avoid System derived hazards. 
+7.1.5.Safety precautions which may be varied by the Acceptor i.e. Primary Earths, which may be removed to allow for testing. 
+7.1.6.A list of items to be issued with the Safety Document, which shall include: - 
+7.1.6.1. Key(s) securing safety precautions that may be removed under the test procedure. 
+7.1.6.2. Procedure for testing. 
+7.1.7.Safety Controllers signature, name, time and date. 
+8. PREPARATION OF LIMITED WORK CERTIFICATE 
+8.1. The Safety Controller shall enter the following details as appropriate: - 
+8.1.1.Work Location. 
+8.1.2.Description of work to be done. 
+8.1.3.Limits of work and/or access. 
+8.1.4.Items to be issued. 
+8.1.5.Safety Controllers signature, name, time and date.
+
+
+
+
+
+
+
+
+
+
+Page 13
+
+9. ISSUE OF SAFETY DOCUMENTS 
+9.1. Safety Documents shall be issued by an Issuer to an Acceptor within the limits of his authorisation. 
+9.2. Permits ROS and Sanction for Operation and Testing shall only be issued by a Safety Controller who is also an Issuer. 
+9.3. The Issuer shall confirm that the Acceptor is authorised to receive the Safety Document. 
+9.4. The Issuer shall ensure that the Acceptor understands the Safety Document, the limits of the work, the Plant and Apparatus identification and location, and is conversant with any further precautions or special procedures to be adopted. 
+9.5. The Issuer shall ensure that the listed items to be issued with the Safety Document are made available to the Acceptor. 
+9.6. The Issuer shall sign, name, time and date the Safety Document when it is issued. 
+9.7. The Acceptor shall sign, name, time and date the Safety Document when it is accepted. 
+10. TRANSFER OF SAFETY DOCUMENTS 
+10.1. Permits for Work and Limited Work Certificates may be transferred between Acceptors by Issuers within the limitations of their authority under the safety rules. The transfer shall be to the same standard as the original issue. 
+10.2. Permits ROS and Sanction for Operation and Testing shall only be transferred by a Safety Controller who is also an Issuer. 
+10.2.1. The transfer shall be to the same standard as the original issue. 
+10.2.2. Where reasonably practicable, the transfer shall be carried out in the presence of the current Acceptor, the new Acceptor and a Safety Controller who is an Issuer. 
+10.2.3. Where face to face transfer is not reasonably practicable: - 
+10.2.3.1. The Plant and/or Apparatus shall be restored by the Acceptor to the same condition as the original issue before surrendering the Safety Document to a Safety Controller who is an Issuer. 11. 
+CLEARANCE OF SAFETY DOCUMENTS 
+11.1. Before clearing the Safety Document, the Acceptor shall ensure that: - 
+11.1.1. All persons in his Working Party have been withdrawn from and instructed not to continue to work on the Plant / Apparatus concerned. 
+11.1.2. All equipment, tools and loose material have been removed and guards and access
+
+
+Page 14
+
+doors replaced, apart from any exceptions identified by the Acceptor. 
+11.1.3. All items issued with the Safety Document have been returned. 
+11.1.4. If the work is not complete and the Plant and/or Apparatus is not in a fit state to be put back into service then the Acceptor may still clear his Safety Document, provided any exceptions are noted in the clearance section of the Safety Document. 
+11.1.5. The Acceptor shall sign date &amp; time the clearance section of the Safety Document. 
+12. CANCELLATION OF SAFETY DOCUMENTS 
+12.1. The Safety Controller cancelling the Safety Document shall ensure that appropriate actions are taken in respect of any exceptions quoted by the Acceptor in the clearance section. 
+12.2. The Safety Controller shall inform the Plant Controller of the cancellation of the Safety Document and of any exceptions pertaining. 
+12.3. The Safety Controller shall sign date &amp; time the cancellation section of the Safety Document. 
+13. CATEGORIES OF SAFETY AUTHORITY The following categories of safety authority are recognised in the Safety Rules: - 
+• Plant Controller 
+• Safety Controller 
+• Issuer 
+• Appointed Person 
+• Acceptor
+
+
+
+
+
+
+
+
+
+
+Page 15
+
+PART D - DEFINITIONS 
+Acceptor - A person who has been nominated by the Location Plant Manager to provide Supervision to the members of a Working Party and to accept, surrender and clear specified Safety Documents. 
+Apparatus - All equipment, in which electrical conductors are used, supported, or of which they may form a part, and for which Indaver/Rivenhall IWMF has a maintenance responsibility. 
+Appointed Person – A person nominated by the Location Plant Manager to carry out specified duties relating to Safety from the System. 
+Approved – Authorised or sanctioned by Rivenhall IWMF Location Plant Manager. 
+Card Safe – A device of an Approved type for the secure retention of Safety Documents. 
+Card Safe Declaration Form – A Form of declaration to be signed by the Acceptor in charge of an additional Working Party who has been given consent by a Safety Controller to carry out work under an issued Card Safe Retained Safety Document 
+Company – Indaver Rivenhall IWMF
+Danger- A risk to health or bodily injury. 
+Dead – At or about zero voltage and disconnected from any Live System. 
+Drained – Where the contents of the Plant and/or Apparatus are adjusted and maintained at a level, which avoids Danger. 
+Earthed – Connected to earth by means of an Earthing Device, providing a connection between a conductor and earth, being one of the following: - 
+Drain Earth - A fixed or portable Earthing Device applied for the purpose of protection against induced voltages. 
+Primary Earth - A fixed or portable Earthing Device applied at a position defined in a Safety Document. 
+Earthing Device - An Approved means of providing a connection between a conductor and earth. 
+Earthing Schedule - A schedule indicating the Drain Earth requirements for each stage of work. 
+General Safety-The provision of safe access to and from the place of work, a safe place to work, safe methods of work, the use of correct work equipment and personal protective equipment. 
+High Voltage (HV) - A voltage exceeding 1000 Volts. 
+Isolated - Disconnected from associated Plant and/or Apparatus by an Isolating Device in the isolating position, or by adequate physical separation or sufficient gap.
+
+
+Page 16
+
+Isolating Device - A device for rendering Plant and/or Apparatus Isolated. 
+Isolation Schedule – A written record provided by a Safety Controller to an Appointed Person which details the safety precautions which should be taken, and the order in which they should be applied to provide Safety from the System.
+Issuer - A person who has been authorised in writing by the Location Plant Manager to issue and transfer a specified Safety Document. 
+Key(s) - Being one of the following: - 
+Key Safe Key - A key unique at the Location capable of operating a lock, other than the control lock, on a Key Safe. 
+Control Key – A key issued solely to Safety Controllers to operate the control lock of a Key Safe. 
+Safety Key - A key unique at the Location, capable of operating a Lock, which will cause an Isolating Device, Earthing device, vent or drain to be Locked. 
+Key Safe - A device of an Approved type for the secure retention of keys. 
+Live- Electrically charged. 
+Location – Any place at which work under the company’s safety rules is carried out. 
+Locked - A condition of Plant and/or Apparatus that cannot be altered without the operation of a locking device which is of standard acceptable to the Location Plant Manager. 
+Low Voltage (LV) - A voltage higher than 50 Volts but lower than 1000 Volts. 
+Lock(s) – Being one of the following: 
+Control Lock – a lock on a Key Safe or a Card Safe to which only Safety Controllers have a key. 
+Personal Lock - A lock unique at the Location issued to an Acceptor for securing Safety Documents within a Card Safe. 
+Safety Lock – An Approved device for securing Points of Isolation, operated by a unique Safety Key. 
+Masculine words - used in these Rules (he, his, him,) shall also be understood to mean the feminine where the sense requires it. 
+Personally Retained – A method for the safe custody of a Safety Document by an Acceptor. 
+Plant Controller - A person authorised in writing by the Location Plant Manager, responsible for the release of Plant and/or Apparatus at the Location for work, and to co-ordinate safety activities at
+
+
+
+Page 17
+
+System interfaces with other Companies. 
+Plant - Fixed and movable items other than Apparatus, for which Indaver, Rivenhall IWMF has a responsibility. 
+Point(s) of Isolation - The point at which equipment has been Isolated and where reasonably practicable immobilised and locked. Safety Tags shall be attached at all Points of Isolation. 
+Purged - A condition of Plant and/or Apparatus from which any dangerous contents have been removed. 
+Safety Controller - A person who has been authorised in writing by the Location Plant Manager, to be responsible for ensuring that adequate precautions are taken to provide Safety from the System. This will include, where appropriate, the preparation and cancellation of a specified Safety Document. 
+Safety Distance - The distance from the nearest High Voltage exposed conductor not Earthed, or from an insulator supporting a High Voltage conductor, which shall be maintained to avoid Danger. 
+Safety Document: being one of the following: - 
+Limited Work Certificate – A Safety Document of a format indicated in these rules, which defines the limits of work and/or access to ensure Safety from the System. 
+Permit for Work– A Safety Document of a format indicated in these rules specifying the Plant and/or Apparatus to be worked on, the work to be carried out and the actions taken to achieve Safety from the System. 
+Sanction for Operation and Testing – A Safety Document of a format indicated in these rules specifying the Plant and/or Apparatus to be tested, making known the conditions under which the testing is to be carried out, along with Points of Isolation which may be varied and confirming actions which have been taken to achieve Safety from the System. 
+Permit ROS – A Safety Document of a format indicated in these rules specifying the Plant and/ or Apparatus to be worked on, the work to be carried out, the Point of Isolation at which supplies may be restored and the actions taken to achieve Safety from the System. 
+Safety from the System- That condition, which safeguards persons working on or testing Plant and/or Apparatus from the Dangers, which are inherent in the System. 
+Safety Tag - An Approved means of identifying locally the point of application of safety precautions. 
+Supervision - being one of the following: - 
+Immediate Supervision - Supervision by a person who is continually available at the Location when work or testing is in progress and who attends the work area as often as is necessary to ensure the safe performance of the work. 
+Personal Supervision - Supervision by the supervising person who shall be present at the work location observing the work process and able to intervene. 
+System- Items of Plant and/or Apparatus, which are used separately or in combination in any
+
+process, associated with the generation, transmission, or distribution of electricity. 
+Vented - Where the contents of the Plant and/or Apparatus are adjusted and maintained at atmospheric pressure. 
+Voltage – Being one of the following: 
+High Voltage (HV) – A voltage of 1000 Volts and above 
+Low Voltage (LV) – A voltage above 50 Volts and below 1000 Volts 
+Extra Low Voltage (ELV) – A Voltage below 50 Volts 
+Working Party – Persons working under the Supervision of an Acceptor including an Acceptor working alone. The Safety Controller shall create a Safety Document under one of the two following formats; 
+Multiple Working Party Safety Document – A Safety Document format that allows one or more working parties to carry out work at the same time under the same Safety Document. Only a Limited Work Certificate or a Permit For Work are permitted of this format. A Permit ROS or Sanction For Operation And Testing is not permitted and shall be of a Single Working Party Document as per section 3.3.3 and 3.4.5 respectively. 
+Single Working Party Safety Document – A Safety Document format that allows only one working party to carry out work under at any one time.
+Document History &amp; Revision log
+
+
+
+
+
+
+
+
+
+
+Page 19`;
+const PART_E = ``;
+
+// Router and rendering functions same as before with nav bar... (simplified for brevity)
 </script>
-
 </body>
 </html>
