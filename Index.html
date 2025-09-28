@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Rivenhall IWMF — Safety Definitions</title>
+  <meta name="description" content="Index • Quick reference • Flashcards for Rivenhall IWMF Safety Rules definitions." />
+  <style>
+    :root{
+      --bg:#f8fafc; --panel:#ffffff; --text:#0f172a; --muted:#475569; --border:#e2e8f0; --accent:#0f172a;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif}
+    a{color:inherit}
+    .container{max-width:1000px;margin:0 auto;padding:16px}
+    header.sticky{position:sticky;top:0;z-index:10;background:#ffffffcc;backdrop-filter:blur(8px);border-bottom:1px solid var(--border)}
+    .row{display:flex;gap:12px;align-items:center;padding:12px 16px}
+    .brand{display:grid;place-items:center;width:40px;height:40px;border-radius:12px;background:var(--accent);color:#fff;font-weight:700}
+    .title{line-height:1}
+    .title h1{margin:0;font-size:18px}
+    .title p{margin:2px 0 0 0;font-size:12px;color:var(--muted)}
+    nav .btn{border:1px solid var(--border);background:#fff;color:#111;padding:8px 12px;border-radius:10px;font-size:14px}
+    nav .btn.active{background:var(--accent);border-color:var(--accent);color:#fff}
+    .search{padding:10px 16px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:#fff}
+    .search input{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:10px;font-size:15px}
+    .grid{display:grid;gap:16px}
+    @media(min-width:860px){.grid.cols-3{grid-template-columns:1fr 2fr}}
+    .card{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:16px;box-shadow:0 1px 0 rgba(16,24,40,.02)}
+    .card h2{margin:0 0 10px 0;font-size:18px}
+    .letter{font-size:12px;font-weight:600;color:var(--muted);margin:10px 0 6px}
+    ul.list{list-style:none;margin:0;padding:0;border:1px solid var(--border);border-radius:12px;overflow:hidden}
+    ul.list li+li{border-top:1px solid var(--border)}
+    .rowbtn{display:block;width:100%;text-align:left;padding:10px 12px;background:#fff;border:0;cursor:pointer}
+    .rowbtn:hover{background:#f1f5f9}
+    .muted{color:var(--muted);font-size:12px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .prose p{margin:0 0 8px 0;color:#334155}
+    .two-cols{display:grid;gap:12px}
+    @media(min-width:720px){.two-cols{grid-template-columns:1fr 1fr}}
+    .pill{display:inline-block;border:1px solid var(--border);padding:6px 10px;border-radius:999px;font-size:12px}
+    .actions{display:flex;gap:8px;align-items:center}
+    button{cursor:pointer}
+    .footer{color:#64748b;font-size:12px;padding-bottom:32px}
+    .flash-card{border:1px solid var(--border);border-radius:16px;background:#fff;padding:16px}
+    .flash-label{font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+    .flash-term{font-size:24px;font-weight:700}
+    .flash-def{font-size:18px;line-height:1.4}
+    .btn-ghost{border:1px solid var(--border);padding:8px 12px;border-radius:10px;background:#fff}
+    .btn-primary{background:var(--accent);border:1px solid var(--accent);color:#fff;padding:8px 12px;border-radius:10px}
+    .flex{display:flex;gap:8px;align-items:center;justify-content:space-between}
+  </style>
+</head>
+<body>
+  <header class="sticky">
+    <div class="row container">
+      <div class="brand">I</div>
+      <div class="title"><h1>Rivenhall IWMF — Safety Definitions</h1><p>Index • Quick reference • Flashcards</p></div>
+      <nav class="actions">
+        <button class="btn" data-tab="index">Index</button>
+        <button class="btn" data-tab="quick">Quick Reference</button>
+        <button class="btn" data-tab="flash">Flashcards</button>
+      </nav>
+    </div>
+    <div class="search" id="searchbar" style="display:none">
+      <div class="container">
+        <input id="search" type="text" placeholder="Search terms or definitions…" />
+      </div>
+    </div>
+  </header>
+
+  <main class="container" id="app"></main>
+
+  <div class="container footer">
+    <hr style="border:none;border-top:1px solid var(--border);margin:24px 0" />
+    Built for rapid learning • This page reformats the Safety Rules (Part D) definitions.
+  </div>
+
+<script>
+// ---------------- Data ----------------
+const DEFINITIONS = [
+  { term: "Acceptor", def: "A person who has been nominated by the Location Plant Manager to provide Supervision to the members of a Working Party and to accept, surrender and clear specified Safety Documents." },
+  { term: "Apparatus", def: "All equipment, in which electrical conductors are used, supported, or of which they may form a part, and for which Indaver/Rivenhall IWMF has a maintenance responsibility." },
+  { term: "Appointed Person", def: "A person nominated by the Location Plant Manager to carry out specified duties relating to Safety from the System." },
+  { term: "Approved", def: "Authorised or sanctioned by Rivenhall IWMF Location Plant Manager." },
+  { term: "Card Safe", def: "A device of an Approved type for the secure retention of Safety Documents." },
+  { term: "Card Safe Declaration Form", def: "A Form of declaration to be signed by the Acceptor in charge of an additional Working Party permitted to work under a Card Safe retained Safety Document." },
+  { term: "Company", def: "Indaver Rivenhall IWMF" },
+  { term: "Danger", def: "A risk to health or bodily injury." },
+  { term: "Dead", def: "At or about zero voltage and disconnected from any Live System." },
+  { term: "Drained", def: "Where the contents of the Plant and/or Apparatus are adjusted and maintained at a level, which avoids Danger." },
+  { term: "Earthed", def: "Connected to earth by means of an Earthing Device." },
+  { term: "Drain Earth", def: "A fixed or portable Earthing Device applied for the purpose of protection against induced voltages." },
+  { term: "Primary Earth", def: "A fixed or portable Earthing Device applied at a position defined in a Safety Document." },
+  { term: "Earthing Device", def: "An Approved means of providing a connection between a conductor and earth." },
+  { term: "Earthing Schedule", def: "A schedule indicating the Drain Earth requirements for each stage of work." },
+  { term: "General Safety", def: "The provision of safe access to and from the place of work, a safe place to work, safe methods of work, the use of correct work equipment and personal protective equipment." },
+  { term: "High Voltage (HV)", def: "A voltage of 1000 Volts and above." },
+  { term: "Isolated", def: "Disconnected from associated Plant and/or Apparatus by an Isolating Device in the isolating position, or by adequate physical separation or sufficient gap." },
+  { term: "Isolating Device", def: "A device for rendering Plant and/or Apparatus Isolated." },
+  { term: "Isolation Schedule", def: "A written record provided by a Safety Controller to an Appointed Person detailing the safety precautions and the order in which they should be applied to provide Safety from the System." },
+  { term: "Issuer", def: "A person authorised in writing by the Location Plant Manager to issue and transfer a specified Safety Document." },
+  { term: "Key Safe Key", def: "A key unique at the Location capable of operating a lock, other than the control lock, on a Key Safe." },
+  { term: "Control Key", def: "A key issued solely to Safety Controllers to operate the control lock of a Key Safe." },
+  { term: "Safety Key", def: "A key unique at the Location, capable of operating a Safety Lock which will secure Isolations, vents or drains." },
+  { term: "Key Safe", def: "A device of an Approved type for the secure retention of keys." },
+  { term: "Live", def: "Electrically charged." },
+  { term: "Location", def: "Any place at which work under the company’s safety rules is carried out." },
+  { term: "Locked", def: "A condition of Plant and/or Apparatus that cannot be altered without the operation of a locking device which is of a standard acceptable to the Location Plant Manager." },
+  { term: "Low Voltage (LV)", def: "A voltage above 50 Volts and below 1000 Volts." },
+  { term: "Control Lock", def: "A lock on a Key Safe or a Card Safe to which only Safety Controllers have a key." },
+  { term: "Personal Lock", def: "A lock unique at the Location issued to an Acceptor for securing Safety Documents within a Card Safe." },
+  { term: "Safety Lock", def: "An Approved device for securing Points of Isolation, and where appropriate, certain vents or drains." },
+  { term: "Masculine words", def: "Masculine words used in these Rules (he, his, him) shall also be understood to mean the feminine where the sense requires it." },
+  { term: "Personally Retained", def: "A method for the safe custody of a Safety Document by an Acceptor." },
+  { term: "Plant Controller", def: "A person authorised in writing by the Location Plant Manager, responsible for the release of Plant and/or Apparatus and coordinating safety at interfaces with other Companies." },
+  { term: "Plant", def: "Fixed and movable items other than Apparatus, for which Indaver, Rivenhall IWMF has a responsibility." },
+  { term: "Point(s) of Isolation", def: "The point(s) at which equipment has been Isolated and where reasonably practicable immobilised and locked. Safety Tags shall be attached at all Points of Isolation." },
+  { term: "Purged", def: "A condition of Plant and/or Apparatus from which any dangerous contents have been removed." },
+  { term: "Safety Controller", def: "A person authorised in writing by the Location Plant Manager, to ensure adequate precautions are taken to provide Safety from the System, including preparation and cancellation of specified Safety Documents." },
+  { term: "Safety Distance", def: "The distance from the nearest High Voltage exposed conductor not Earthed, or from an insulator supporting a High Voltage conductor, which shall be maintained to avoid Danger." },
+  { term: "Safety Document", def: "A formal document: Limited Work Certificate, Permit for Work, Permit ROS, or Sanction for Operation & Testing." },
+  { term: "Safety from the System", def: "That condition which safeguards persons working on or testing Plant and/or Apparatus from the Dangers inherent in the System." },
+  { term: "Safety Tag", def: "An Approved means of identifying locally the point of application of safety precautions." },
+  { term: "Immediate Supervision", def: "Supervision by a person continually available at the Location when work/testing is in progress, attending as often as necessary to ensure safety." },
+  { term: "Personal Supervision", def: "Supervision by the supervising person who is present at the work location observing the work process and able to intervene." },
+  { term: "System", def: "Items of Plant and/or Apparatus used separately or in combination in any process associated with the generation, transmission, or distribution of electricity." },
+  { term: "Vented", def: "Where the contents of the Plant and/or Apparatus are adjusted and maintained at atmospheric pressure." },
+  { term: "Voltage – HV", def: "≥ 1000 Volts." },
+  { term: "Voltage – LV", def: "50–1000 Volts." },
+  { term: "Voltage – ELV", def: "< 50 Volts." },
+  { term: "Working Party", def: "Persons working under the Supervision of an Acceptor including an Acceptor working alone." },
+  { term: "Multiple Working Party Safety Document", def: "Safety Document format allowing one or more working parties to work at the same time under the same document (Limited Work Certificate or Permit for Work only)." },
+  { term: "Single Working Party Safety Document", def: "Safety Document format allowing only one working party to carry out work at any one time." }
+];
+
+// ---------------- State ----------------
+let TAB = "index";
+let QUERY = "";
+let SELECTED = null;
+const byTerm = (a,b)=>a.term.localeCompare(b.term);
+
+function setTab(t){
+  TAB = t;
+  document.querySelectorAll('nav .btn').forEach(b=>b.classList.toggle('active', b.dataset.tab===t));
+  document.getElementById('searchbar').style.display = (t==="flash") ? "none" : "block";
+  render();
+}
+
+function setQuery(q){
+  QUERY = q;
+  render();
+}
+
+function filtered(){
+  if(!QUERY) return [...DEFINITIONS].sort(byTerm);
+  const q = QUERY.toLowerCase();
+  return [...DEFINITIONS].filter(x=>x.term.toLowerCase().includes(q)||x.def.toLowerCase().includes(q)).sort(byTerm);
+}
+
+// ---------------- Views ----------------
+function htmlEscape(s){return s.replace(/[&<>]/g,c=>({\"&\":\"&amp;\",\"<\":\"&lt;\",\">\":\"&gt;\"}[c]))}
+
+function IndexView(list){
+  // group A-Z
+  const groups = {};
+  list.forEach(item=>{
+    const k = item.term[0].toUpperCase();
+    (groups[k] ||= []).push(item);
+  });
+  Object.values(groups).forEach(arr=>arr.sort(byTerm));
+
+  let letters = Object.keys(groups).sort();
+  let left = letters.map(letter=>{
+    const items = groups[letter].map(x=>`
+      <li><button class=\"rowbtn\" onclick='selectTerm(${JSON.stringify(x.term)})'>
+        <div class=\"font-medium\">${htmlEscape(x.term)}</div>
+        <span class=\"muted\">${htmlEscape(x.def)}</span>
+      </button></li>`).join(\"\");
+    return `<div><div class=\"letter\">${letter}</div><ul class=\"list\">${items}</ul></div>`;
+  }).join(\"\");
+
+  let right = SELECTED ? `
+    <h2>${htmlEscape(SELECTED.term)}</h2>
+    <div class=\"prose\"><p>${htmlEscape(SELECTED.def)}</p></div>
+    <div style=\"margin-top:10px\" class=\"actions\">
+      <button class=\"btn-ghost\" onclick='copyText(${JSON.stringify(SELECTED.term + \": \" + SELECTED.def)})'>Copy</button>
+    </div>
+  ` : `<p class=\"muted\">Pick a term from the left to view the full definition.</p>`;
+
+  return `
+    <div class=\"grid cols-3\">
+      <div class=\"card\">
+        <h2>A–Z Index</h2>
+        <div style=\"max-height:70vh;overflow:auto;padding-right:6px\">${left}</div>
+      </div>
+      <div class=\"card\" style=\"grid-column: span 1 / span 1\"></div>
+      <div class=\"card\" style=\"grid-column: span 1 / span 1\">
+        ${right}
+      </div>
+    </div>
+  `;
+}
+
+function QuickView(list){
+  const cards = list.map(x=>`
+    <div class=\"card\">
+      <div class=\"font-semibold\">${htmlEscape(x.term)}</div>
+      <div class=\"muted\" style=\"font-size:14px\">${htmlEscape(x.def)}</div>
+    </div>
+  `).join(\"\");
+  return `<div class=\"two-cols\">${cards}</div>`;
+}
+
+// Flashcards
+let currentIdx = Math.floor(Math.random()*DEFINITIONS.length);
+let revealed = false;
+function nextCard(){
+  let n = Math.floor(Math.random()*DEFINITIONS.length);
+  if(n===currentIdx) n = (n+1)%DEFINITIONS.length;
+  currentIdx = n;
+  revealed = false;
+  render();
+}
+function reveal(){ revealed = true; render(); }
+
+function FlashView(){
+  const item = DEFINITIONS[currentIdx];
+  return `
+    <div class=\"card\">
+      <div class=\"flex\">
+        <div class=\"actions\">
+          <button class=\"btn-ghost\" onclick=\"nextCard()\">Next</button>
+          ${revealed?\"\":`<button class=\"btn-primary\" onclick=\"reveal()\">Reveal</button>`}
+        </div>
+      </div>
+      <div class=\"flash-card\" style=\"margin-top:10px\">
+        <div class=\"flash-label\">Definition</div>
+        <div class=\"flash-def\">${htmlEscape(item.def)}</div>
+        ${revealed?`
+          <div style=\"margin-top:14px;padding-top:10px;border-top:1px solid var(--border)\">
+            <div class=\"flash-label\">Answer</div>
+            <div class=\"flash-term\">${htmlEscape(item.term)}</div>
+          </div>`
+        : `<button class=\"btn-ghost\" style=\"width:100%;margin-top:16px\" onclick=\"reveal()\">Tap to reveal answer</button>`}
+      </div>
+      <div class=\"flex\" style=\"margin-top:10px\">
+        <span class=\"muted\">Tip: tap “Next” for a new random definition.</span>
+        <button class=\"btn-ghost\" onclick=\"nextCard()\">Another one →</button>
+      </div>
+    </div>
+  `;
+}
+
+// ---------------- Actions ----------------
+function selectTerm(term){
+  SELECTED = DEFINITIONS.find(x=>x.term===term) || null;
+  render();
+}
+function copyText(t){
+  navigator.clipboard?.writeText(t);
+}
+
+// ---------------- Render ----------------
+function render(){
+  const app = document.getElementById('app');
+  const list = filtered();
+  document.getElementById('search').value = QUERY;
+  let view = '';
+  if(TAB==='index') view = IndexView(list);
+  if(TAB==='quick') view = QuickView(list);
+  if(TAB==='flash') view = FlashView();
+  app.innerHTML = view;
+}
+document.addEventListener('click',(e)=>{
+  const btn = e.target.closest('button.btn');
+  if(btn){ setTab(btn.dataset.tab); }
+});
+document.getElementById('search').addEventListener('input', (e)=> setQuery(e.target.value));
+// init
+setTab('index'); SELECTED=null; render();
+</script>
+</body>
+</html>
