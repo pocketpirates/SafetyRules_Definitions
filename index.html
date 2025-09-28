@@ -8,6 +8,7 @@
 </head>
 <body class="bg-slate-50 text-slate-900">
 <div id="app"></div>
+
 <script>
 const DEFINITIONS = [{"term": "Acceptor", "def": "A person who has been nominated by the Location Plant Manager to provide Supervision to the members of a Working Party and to accept, surrender and clear specified Safety Documents."}, {"term": "Apparatus", "def": "All equipment, in which electrical conductors are used, supported, or of which they may form a part, and for which Indaver/Rivenhall IWMF has a maintenance responsibility."}, {"term": "Appointed Person", "def": "A person nominated by the Location Plant Manager to carry out specified duties relating to Safety from the System."}, {"term": "Approved", "def": "Authorised or sanctioned by Rivenhall IWMF Location Plant Manager."}, {"term": "Card Safe", "def": "A device of an Approved type for the secure retention of Safety Documents."}, {"term": "Card Safe Declaration Form", "def": "A Form of declaration to be signed by the Acceptor in charge of an additional Working Party permitted to work under a Card Safe retained Safety Document."}, {"term": "Company", "def": "Indaver Rivenhall IWMF"}, {"term": "Danger", "def": "A risk to health or bodily injury."}, {"term": "Dead", "def": "At or about zero voltage and disconnected from any Live System."}, {"term": "Drained", "def": "Where the contents of the Plant and/or Apparatus are adjusted and maintained at a level, which avoids Danger."}, {"term": "Earthed", "def": "Connected to earth by means of an Earthing Device."}, {"term": "Drain Earth", "def": "A fixed or portable Earthing Device applied for the purpose of protection against induced voltages."}, {"term": "Primary Earth", "def": "A fixed or portable Earthing Device applied at a position defined in a Safety Document."}, {"term": "Earthing Device", "def": "An Approved means of providing a connection between a conductor and earth."}, {"term": "Earthing Schedule", "def": "A schedule indicating the Drain Earth requirements for each stage of work."}, {"term": "General Safety", "def": "The provision of safe access to and from the place of work, a safe place to work, safe methods of work, the use of correct work equipment and personal protective equipment."}, {"term": "High Voltage (HV)", "def": "A voltage of 1000 Volts and above."}, {"term": "Isolated", "def": "Disconnected from associated Plant and/or Apparatus by an Isolating Device in the isolating position, or by adequate physical separation or sufficient gap."}, {"term": "Isolating Device", "def": "A device for rendering Plant and/or Apparatus Isolated."}, {"term": "Isolation Schedule", "def": "A written record provided by a Safety Controller to an Appointed Person detailing the safety precautions and the order in which they should be applied to provide Safety from the System."}, {"term": "Issuer", "def": "A person authorised in writing by the Location Plant Manager to issue and transfer a specified Safety Document."}, {"term": "Key Safe Key", "def": "A key unique at the Location capable of operating a lock, other than the control lock, on a Key Safe."}, {"term": "Control Key", "def": "A key issued solely to Safety Controllers to operate the control lock of a Key Safe."}, {"term": "Safety Key", "def": "A key unique at the Location, capable of operating a Safety Lock which will secure Isolations, vents or drains."}, {"term": "Key Safe", "def": "A device of an Approved type for the secure retention of keys."}, {"term": "Live", "def": "Electrically charged."}, {"term": "Location", "def": "Any place at which work under the company’s safety rules is carried out."}, {"term": "Locked", "def": "A condition of Plant and/or Apparatus that cannot be altered without the operation of a locking device which is of a standard acceptable to the Location Plant Manager."}, {"term": "Low Voltage (LV)", "def": "A voltage above 50 Volts and below 1000 Volts."}, {"term": "Control Lock", "def": "A lock on a Key Safe or a Card Safe to which only Safety Controllers have a key."}, {"term": "Personal Lock", "def": "A lock unique at the Location issued to an Acceptor for securing Safety Documents within a Card Safe."}, {"term": "Safety Lock", "def": "An Approved device for securing Points of Isolation, and where appropriate, certain vents or drains."}, {"term": "Masculine words", "def": "Masculine words used in these Rules (he, his, him) shall also be understood to mean the feminine where the sense requires it."}, {"term": "Personally Retained", "def": "A method for the safe custody of a Safety Document by an Acceptor."}, {"term": "Plant Controller", "def": "A person authorised in writing by the Location Plant Manager, responsible for the release of Plant and/or Apparatus and coordinating safety at interfaces with other Companies."}, {"term": "Plant", "def": "Fixed and movable items other than Apparatus, for which Indaver, Rivenhall IWMF has a responsibility."}, {"term": "Point(s) of Isolation", "def": "The point(s) at which equipment has been Isolated and where reasonably practicable immobilised and locked. Safety Tags shall be attached at all Points of Isolation."}, {"term": "Purged", "def": "A condition of Plant and/or Apparatus from which any dangerous contents have been removed."}, {"term": "Safety Controller", "def": "A person authorised in writing by the Location Plant Manager, to ensure adequate precautions are taken to provide Safety from the System, including preparation and cancellation of specified Safety Documents."}, {"term": "Safety Distance", "def": "The distance from the nearest High Voltage exposed conductor not Earthed, or from an insulator supporting a High Voltage conductor, which shall be maintained to avoid Danger."}, {"term": "Safety Document", "def": "A formal document: Limited Work Certificate, Permit for Work, Permit ROS, or Sanction for Operation & Testing."}, {"term": "Safety from the System", "def": "That condition which safeguards persons working on or testing Plant and/or Apparatus from the Dangers inherent in the System."}, {"term": "Safety Tag", "def": "An Approved means of identifying locally the point of application of safety precautions."}, {"term": "Immediate Supervision", "def": "Supervision by a person continually available at the Location when work/testing is in progress, attending as often as necessary to ensure safety."}, {"term": "Personal Supervision", "def": "Supervision by the supervising person who is present at the work location observing the work process and able to intervene."}, {"term": "System", "def": "Items of Plant and/or Apparatus used separately or in combination in any process associated with the generation, transmission, or distribution of electricity."}, {"term": "Vented", "def": "Where the contents of the Plant and/or Apparatus are adjusted and maintained at atmospheric pressure."}, {"term": "Voltage – HV", "def": "≥ 1000 Volts."}, {"term": "Voltage – LV", "def": "50–1000 Volts."}, {"term": "Voltage – ELV", "def": "< 50 Volts."}, {"term": "Working Party", "def": "Persons working under the Supervision of an Acceptor including an Acceptor working alone."}, {"term": "Multiple Working Party Safety Document", "def": "Safety Document format allowing one or more working parties to work at the same time under the same document (Limited Work Certificate or Permit for Work only)."}, {"term": "Single Working Party Safety Document", "def": "Safety Document format allowing only one working party to carry out work at any one time."}];
 const FOREWORD = `FOREWORD
@@ -450,7 +451,106 @@ Document History &amp; Revision log
 Page 19`;
 const PART_E = ``;
 
-// Router and rendering functions same as before with nav bar... (simplified for brevity)
+function Page(title, content) {
+  return `<div class='min-h-screen bg-slate-50'>
+    <header class='bg-white border-b border-slate-200'>
+      <div class='max-w-4xl mx-auto px-4 py-4'>
+        <h1 class='text-xl font-semibold mb-2'>${title}</h1>
+        <nav class='flex flex-wrap gap-3 text-sm'>
+          <a href='#home' class='hover:underline'>Home</a>
+          <a href='#foreword' class='hover:underline'>Foreword</a>
+          <a href='#part-a' class='hover:underline'>Part A</a>
+          <a href='#part-b' class='hover:underline'>Part B</a>
+          <a href='#part-c' class='hover:underline'>Part C</a>
+          <a href='#part-d' class='hover:underline'>Part D</a>
+          <a href='#part-e' class='hover:underline'>Part E</a>
+        </nav>
+      </div>
+    </header>
+    <main class='max-w-4xl mx-auto p-4'>${content}</main>
+  </div>`;
+}
+
+function Home() {
+  const links = [
+    ["foreword","Foreword"],
+    ["part-a","Part A — General Provisions"],
+    ["part-b","Part B — Basic Safety Rules"],
+    ["part-c","Part C — Safety Document Procedures"],
+    ["part-d","Part D — Definitions"],
+    ["part-e","Part E — Forms of Safety Documents"]
+  ];
+  let grid = links.map(([id,label])=>`<a href='#${id}' class='block border p-4 rounded-xl bg-white hover:bg-slate-50'>${label}</a>`).join("");
+  return Page("Home", `<div class='grid gap-3 md:grid-cols-2'>${grid}</div>`);
+}
+
+function TextPage(title, text){
+  return Page(title, `<div class='prose whitespace-pre-wrap'>${text}</div>`);
+}
+
+function PartD(){
+  return Page("Part D — Definitions", `<div class='mb-4 text-slate-700 whitespace-pre-wrap'>${PART_D_TEXT}</div><div id='partd'></div>`);
+}
+
+function renderPartD(){
+  const container = document.getElementById("partd");
+  if(!container) return;
+  container.innerHTML = `
+    <div class='flex gap-2 mb-4'>
+      <button id='tab-index' class='px-3 py-1 border rounded'>Index</button>
+      <button id='tab-quick' class='px-3 py-1 border rounded'>Quick Reference</button>
+      <button id='tab-flash' class='px-3 py-1 border rounded'>Flashcards</button>
+    </div>
+    <div id='partd-content'></div>`;
+  let tab="index";
+  function renderTab(){
+    if(tab==="index" || tab==="quick"){
+      const list=[...DEFINITIONS].sort((a,b)=>a.term.localeCompare(b.term));
+      container.querySelector("#partd-content").innerHTML=list.map(x=>`<div class='border rounded p-2 mb-1'><b>${x.term}</b><br><span class='text-sm text-slate-600'>${x.def}</span></div>`).join("");
+    }else if(tab==="flash"){
+      flashRender();
+    }
+  }
+  function flashRender(){
+    const idx=Math.floor(Math.random()*DEFINITIONS.length);
+    const item=DEFINITIONS[idx];
+    container.querySelector("#partd-content").innerHTML=`
+      <div class='border rounded p-4'>
+        <div class='font-bold text-xl mb-2'>${item.term}</div>
+        <button id='reveal' class='border px-3 py-1 rounded'>Reveal</button>
+        <div id='def' class='mt-3 hidden text-slate-700'>${item.def}</div>
+        <div><button id='next' class='mt-3 border px-3 py-1 rounded'>Next →</button></div>
+      </div>`;
+    container.querySelector("#reveal").onclick=()=>{
+      container.querySelector("#def").classList.remove("hidden");
+    };
+    container.querySelector("#next").onclick=flashRender;
+  }
+  container.querySelector("#tab-index").onclick=()=>{tab="index";renderTab();};
+  container.querySelector("#tab-quick").onclick=()=>{tab="quick";renderTab();};
+  container.querySelector("#tab-flash").onclick=()=>{tab="flash";renderTab();};
+  renderTab();
+}
+
+function appRouter(){
+  const hash = window.location.hash.slice(1) || "home";
+  if(hash==="home") return Home();
+  if(hash==="foreword") return TextPage("Foreword", FOREWORD);
+  if(hash==="part-a") return TextPage("Part A — General Provisions", PART_A);
+  if(hash==="part-b") return TextPage("Part B — Basic Safety Rules", PART_B);
+  if(hash==="part-c") return TextPage("Part C — Safety Document Procedures", PART_C);
+  if(hash==="part-d") return PartD();
+  if(hash==="part-e") return TextPage("Part E — Forms of Safety Documents", PART_E);
+  return Home();
+}
+
+function render(){
+  document.getElementById("app").innerHTML=appRouter();
+  renderPartD();
+}
+window.addEventListener("hashchange", render);
+render();
 </script>
+
 </body>
 </html>
