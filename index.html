@@ -1,82 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Rivenhall IWMF — Safety Definitions</title>
-  <meta name="description" content="Index • Quick reference • Flashcards for Rivenhall IWMF Safety Rules definitions." />
-  <style>
-    :root{
-      --bg:#f8fafc; --panel:#ffffff; --text:#0f172a; --muted:#475569; --border:#e2e8f0; --accent:#0f172a;
-    }
-    *{box-sizing:border-box}
-    html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif}
-    a{color:inherit}
-    .container{max-width:1000px;margin:0 auto;padding:16px}
-    header.sticky{position:sticky;top:0;z-index:10;background:#ffffffcc;backdrop-filter:blur(8px);border-bottom:1px solid var(--border)}
-    .row{display:flex;gap:12px;align-items:center;padding:12px 16px}
-    .brand{display:grid;place-items:center;width:40px;height:40px;border-radius:12px;background:var(--accent);color:#fff;font-weight:700}
-    .title{line-height:1}
-    .title h1{margin:0;font-size:18px}
-    .title p{margin:2px 0 0 0;font-size:12px;color:var(--muted)}
-    nav .btn{border:1px solid var(--border);background:#fff;color:#111;padding:8px 12px;border-radius:10px;font-size:14px}
-    nav .btn.active{background:var(--accent);border-color:var(--accent);color:#fff}
-    .search{padding:10px 16px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:#fff}
-    .search input{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:10px;font-size:15px}
-    .grid{display:grid;gap:16px}
-    @media(min-width:860px){.grid.cols-2{grid-template-columns:1fr 1fr}}
-    .card{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:16px;box-shadow:0 1px 0 rgba(16,24,40,.02)}
-    .card h2{margin:0 0 10px 0;font-size:18px}
-    .letter{font-size:12px;font-weight:600;color:var(--muted);margin:10px 0 6px}
-    ul.list{list-style:none;margin:0;padding:0;border:1px solid var(--border);border-radius:12px;overflow:hidden}
-    ul.list li+li{border-top:1px solid var(--border)}
-    .rowbtn{display:block;width:100%;text-align:left;padding:10px 12px;background:#fff;border:0;cursor:pointer}
-    .rowbtn:hover{background:#f1f5f9}
-    .muted{color:var(--muted);font-size:12px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .prose p{margin:0 0 8px 0;color:#334155}
-    .two-cols{display:grid;gap:12px}
-    @media(min-width:720px){.two-cols{grid-template-columns:1fr 1fr}}
-    .pill{display:inline-block;border:1px solid var(--border);padding:6px 10px;border-radius:999px;font-size:12px}
-    .actions{display:flex;gap:8px;align-items:center}
-    button{cursor:pointer}
-    .footer{color:#64748b;font-size:12px;padding-bottom:32px}
-    .flash-card{border:1px solid var(--border);border-radius:16px;background:#fff;padding:16px}
-    .flash-label{font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
-    .flash-term{font-size:24px;font-weight:700}
-    .flash-def{font-size:18px;line-height:1.4}
-    .btn-ghost{border:1px solid var(--border);padding:8px 12px;border-radius:10px;background:#fff}
-    .btn-primary{background:var(--accent);border:1px solid var(--accent);color:#fff;padding:8px 12px;border-radius:10px}
-    .flex{display:flex;gap:8px;align-items:center;justify-content:space-between}
-  </style>
-</head>
-<body>
-  <header class="sticky">
-    <div class="row container">
-      <div class="brand">I</div>
-      <div class="title"><h1>Rivenhall IWMF — Safety Definitions</h1><p>Index • Quick reference • Flashcards</p></div>
-      <nav class="actions">
-        <button class="btn" data-tab="index">Index</button>
-        <button class="btn" data-tab="quick">Quick Reference</button>
-        <button class="btn" data-tab="flash">Flashcards</button>
-      </nav>
-    </div>
-    <div class="search" id="searchbar" style="display:none">
-      <div class="container">
-        <input id="search" type="text" placeholder="Search terms or definitions…" />
-      </div>
-    </div>
-  </header>
+import React, { useMemo, useState, useEffect } from "react";
 
-  <main class="container" id="app"></main>
+// Hash router helper
+function useHash(defaultHash = "home") {
+  const [hash, setHash] = useState(() => (window.location.hash || `#${defaultHash}`).slice(1));
+  useEffect(() => {
+    function onChange() { setHash((window.location.hash || `#${defaultHash}`).slice(1)); }
+    window.addEventListener("hashchange", onChange);
+    if (!window.location.hash) window.location.hash = `#${defaultHash}`;
+    return () => window.removeEventListener("hashchange", onChange);
+  }, [defaultHash]);
+  const go = (h) => (window.location.hash = `#${h}`);
+  return [hash, go];
+}
 
-  <div class="container footer">
-    <hr style="border:none;border-top:1px solid var(--border);margin:24px 0" />
-    Built for rapid learning • This page reformats the Safety Rules (Part D) definitions.
-  </div>
-
-<script>
-// ---------------- Data ----------------
-var DEFINITIONS = [
+// ----------------- PART D: Definitions data & helpers -----------------
+const DEFINITIONS = [
   { term: "Acceptor", def: "A person who has been nominated by the Location Plant Manager to provide Supervision to the members of a Working Party and to accept, surrender and clear specified Safety Documents." },
   { term: "Apparatus", def: "All equipment, in which electrical conductors are used, supported, or of which they may form a part, and for which Indaver/Rivenhall IWMF has a maintenance responsibility." },
   { term: "Appointed Person", def: "A person nominated by the Location Plant Manager to carry out specified duties relating to Safety from the System." },
@@ -129,181 +67,361 @@ var DEFINITIONS = [
   { term: "Voltage – ELV", def: "< 50 Volts." },
   { term: "Working Party", def: "Persons working under the Supervision of an Acceptor including an Acceptor working alone." },
   { term: "Multiple Working Party Safety Document", def: "Safety Document format allowing one or more working parties to work at the same time under the same document (Limited Work Certificate or Permit for Work only)." },
-  { term: "Single Working Party Safety Document", def: "Safety Document format allowing only one working party to carry out work at any one time." }
+  { term: "Single Working Party Safety Document", def: "Safety Document format allowing only one working party to carry out work at any one time." },
 ];
+const byTerm = (a, b) => a.term.localeCompare(b.term);
 
-// ---------------- State ----------------
-var TAB = "index";
-var QUERY = "";
-var SELECTED = null;
-var currentIdx = Math.floor(Math.random()*DEFINITIONS.length);
-var revealed = false;
-
-function byTerm(a,b){ return a.term.localeCompare(b.term); }
-
-function setTab(t){
-  TAB = t;
-  var buttons = document.querySelectorAll('nav .btn');
-  for (var i=0;i<buttons.length;i++){
-    var b = buttons[i];
-    b.classList.toggle('active', b.getAttribute('data-tab')===t);
-  }
-  document.getElementById('searchbar').style.display = (t==="flash") ? "none" : "block";
-  location.hash = "#" + t; // update URL hash
-  render();
+function useFiltered(list, query) {
+  return useMemo(() => {
+    if (!query) return list;
+    const q = query.toLowerCase();
+    return list.filter(
+      (x) => x.term.toLowerCase().includes(q) || x.def.toLowerCase().includes(q)
+    );
+  }, [list, query]);
 }
 
-function setQuery(q){ QUERY = q; render(); }
+// ----------------- TEXT: Foreword & Parts A/B/C/E (verbatim; formatted) -----------------
+const FOREWORD = `Rivenhall IWMF Safety Rules are provided to ensure that work can be undertaken without hazard from Electrical or Mechanical Equipment.
 
-function filtered(){
-  var list = DEFINITIONS.slice();
-  if(!QUERY){ list.sort(byTerm); return list; }
-  var q = QUERY.toLowerCase();
-  var out = [];
-  for (var i=0;i<list.length;i++){
-    var x = list[i];
-    if (x.term.toLowerCase().indexOf(q)>-1 || x.def.toLowerCase().indexOf(q)>-1){ out.push(x); }
-  }
-  out.sort(byTerm);
-  return out;
-}
+The Safety Rules are mandatory for work at Rivenhall IWMF. It is the duty of every person who may be concerned with work on the system to make themselves thoroughly familiar with the Safety Rules and supporting documents appropriate to the activity that they are undertaking. In addition, all persons have a general duty to be conversant with and to observe statutory requirements relating to any activities to which they have an involvement.
 
-// ---------------- Views ----------------
-function htmlEscape(s){ return s.replace(/[&<>]/g,function(c){ return c==="&"?"&amp;":(c==="<"?"&lt;":"&gt;"); }); }
+Work should never be considered to be so urgent or important that time cannot be taken to plan it properly and perform it safely.
 
-function IndexView(list){
-  // group A-Z
-  var groups = {};
-  for (var i=0;i<list.length;i++){ 
-    var item = list[i];
-    var k = item.term.charAt(0).toUpperCase();
-    if (!groups[k]) groups[k] = [];
-    groups[k].push(item);
-  }
-  for (var key in groups){ groups[key].sort(byTerm); }
+The issue of a safety document does not, in itself, make a job safe. The achievement of safety from all inherent dangers also depends on full and logical preparation of work. This includes:
 
-  var letters = Object.keys(groups).sort();
-  var left = "";
-  for (var li=0; li<letters.length; li++){
-    var letter = letters[li];
-    var items = groups[letter];
-    var itemsHtml = "";
-    for (var j=0;j<items.length;j++){
-      var x = items[j];
-      itemsHtml += '<li><button class=\"rowbtn\" onclick=\"selectTerm(' + JSON.stringify(x.term.replace(/\"/g,'\\"')) + ')\"><div class=\"font-medium\">' + htmlEscape(x.term) + '</div><span class=\"muted\">' + htmlEscape(x.def) + '</span></button></li>';
+• Identifying and assessing all reasonably foreseeable risks thereby implementing control measures to reduce the significant risks to a level, which as a minimum satisfies all current legislative requirements and even more importantly is acceptable to persons performing the task.
+
+• Executing the work in a safe manner by suitably competent personnel.
+
+The risk assessment for the task identifies the risks associated with carrying out the work and also the risks inherent in the system in its operational state. These rules, associated procedures and instructions therefore define the control measures necessary to reduce these system risks to an acceptable level.
+
+If, whether intentionally or through neglect or carelessness, a person fails to observe the Safety Rules and supporting documents, or unnecessarily endangers the personal safety of either themselves or others, then, in the case of an employee, that employee will be subject to disciplinary action under the Company’s Disciplinary Policy or, in any other case, that person will be subject to such action as the Company may consider appropriate in the circumstances.`;
+
+const PART_A = `PART A - GENERAL PROVISIONS
+
+1. INTERPRETATION
+
+1.1. SHALL
+When “shall” is used in these Safety Rules or associated procedures with no qualification, this indicates a mandatory requirement with no discretion permitted and no judgement to be made.
+
+1.2. SHALL, WHERE PRACTICABLE
+When “shall, where practicable” is used to qualify a requirement, a slightly less strict standard is imposed. It means that where it is possible to achieve in the light of current knowledge and invention, bearing in mind the hazards associated with work to be undertaken, then the requirement shall be met. One is not allowed to avoid the requirement on the grounds of difficulty, inconvenience or cost.
+
+1.3. SHALL, WHERE REASONABLY PRACTICABLE
+When “shall, where reasonably practicable” is used to qualify a requirement then a judgement must be made as to what is reasonable, taking into account the magnitude of the risk on the one hand and the cost, time and trouble, or effort necessary for averting the risk on the other hand.
+
+1.4. WORK
+When used in these Safety Rules, the term “work” may include testing.
+
+2. GENERAL REQUIREMENTS
+2.1. All persons with responsibilities under these Safety Rules must possess sufficient knowledge and/or experience to avoid Danger. They must have received training for the roles that they are to perform under the Safety Rules.
+
+2.2. Any person receiving instructions in the application of these Safety Rules shall report to the person giving those instructions any objections on safety grounds to carrying them out. Any such objections shall be dealt with in accordance with an Approved written procedure.
+
+2.3. If a hazard arises or is suspected during the course of work, which could give rise to Danger, the work shall cease, the situation shall be reported immediately to the Safety Controller and all persons withdrawn from the Plant and/or Apparatus concerned.
+
+2.4. In addition to these Safety Rules, other associated policies, procedures and instructions issued by Rivenhall IWMF, or other authorities shall be complied with.
+
+3. GENERAL SAFETY
+3.1. In addition to the requirements for establishing Safety from the System specified in these rules, General Safety must be established and maintained at all times at and in the vicinity of the place of work. Supervisors must ensure that General Safety is established, monitored and maintained. During the course of the work members of the Working Party must maintain General Safety and ensure other work areas are not adversely affected by their activities.
+
+3.2. The discharging of responsibility for General Safety will be achieved as part of the normal pattern of management delegation and control by ensuring that all activities are in accordance with appropriate instructions & guidance.
+
+3.3. When a requirement for work is identified, it is fundamental that prior to work commencing the hazards present shall be recognised, the risks assessed and the necessary control measures implemented to reduce any risk to an acceptable level.
+
+4. EXCEPTIONAL CIRCUMSTANCES
+4.1. Work on Plant and/or Apparatus, which is part of the System and to which these Safety Rules cannot be applied, or for specific, exceptional circumstances should not be applied, shall be carried out in accordance with an Approved written procedure.`;
+
+const PART_B = `PART B - THE BASIC SAFETY RULES
+
+1. APPLICATION OF THE RULES
+1.1. These Safety Rules shall be applied to all Plant and Apparatus, which form part of the System.
+1.2. Any Plant and/or Apparatus not considered to be part of the System, to which these Safety Rules therefore do not apply, shall be identified in an Approved written procedure and an alternative safe system of work shall be provided.
+1.3. Plant and Apparatus shall be added to and removed from the System only in accordance with an Approved written procedure, which shall determine the time when these Safety Rules are to be applied to new equipment and cease to apply to equipment removed. The Approved written procedure may include provision for equipment temporarily disconnected and removed from the normal service position to workshops or work area to be considered as temporarily removed from the System.
+
+2. APPROACH TO EXPOSED HIGH VOLTAGE CONDUCTORS AND /OR INSULATORS
+2.1. Persons shall not allow any part of their body to approach exposed conductors designed for, and operated at, High Voltage, or insulators supporting such conductors, within the Safety Distances specified in 2.4, unless the conductors have been Isolated and Danger has been excluded.
+2.2. When exposed High Voltage conductors are not Isolated, the only objects permitted to approach them, or insulators supporting them, within the Safety Distances specified in 2.4, shall be Approved insulated devices.
+2.3. When exposed conductors are Isolated but could be subject to High Voltage, the only objects, which shall be caused to approach them, or insulators supporting them, within the Safety Distances specified in 2.4, shall be Approved voltage measuring devices or Earthing Devices.
+2.4. A distance of 300mm (12”) shall also be maintained from that portion of the insulators supporting exposed High Voltage conductors, which is outside the appropriate Safety Distance from the conductors.
+
+3. SAFETY PRECAUTIONS FOR WORK ON OR ADJACENT TO PLANT AND/OR HIGH VOLTAGE APPARATUS
+3.1. When work is to be carried out on or adjacent to Plant and/or H.V. Apparatus and the means of achieving Safety from the System is by limiting the work or the work area, written instructions clearly defining the limits shall be given. When it is considered necessary a Limited Work Certificate shall be issued.
+3.2. When limiting the work or the work area is insufficient to achieve Safety from the System, it shall be achieved by the application of the following requirements: - (3.2.1–3.2.12 as per document).
+3.3. When work is to be carried out on Plant and/or H.V. Apparatus, and it is essential to restore supplies for certain work during the period that the Safety Document is in force, additional precautions shall be applied, including an Approved procedure and a Permit for Work ROS. No other Safety Document shall be in force on the same items.
+3.4. When testing is to be carried out on Plant and/or H.V. Apparatus, testing supplies may be restored and/or Primary Earths removed when necessary under a Sanction for Operation and Testing; the Acceptor has explicit responsibilities (3.4.7).
+
+4. SAFETY PRECAUTIONS FOR WORK ON LOW VOLTAGE APPARATUS
+4.1–4.4. LV work should be Dead wherever reasonably practicable; isolate, lock off, tag, and work under a Permit. If not reasonable, an Approved procedure and a Safety Document are required. ELV may proceed with local isolation at Safety Controller discretion.
+
+5. OPERATION OF PLANT AND APPARATUS
+5.1. Operation to achieve Safety from the System shall never involve pre‑arranged signals or time intervals.
+
+6. DEMARCATION OF WORK AREAS
+6.1. Work area shall be clearly defined and physically protected where necessary.
+
+7. IDENTIFICATION OF PLANT & APPARATUS
+7.1. Work shall only be permitted on Plant/Apparatus which is readily identifiable; Acceptors must confirm correct identification.`;
+
+const PART_C = `PART C - SAFETY DOCUMENT PROCEDURES
+
+1. SAFETY PROCEDURES LOCAL INSTRUCTION
+1.1. The manner in which safety procedures are to be applied shall be specified in either a Rivenhall IWMF Group Policy Document or a Site Management Instruction.
+
+2. SAFETY DOCUMENTS
+2.1. Limited Work Certificate; Permit for Work; Permit for Work ROS; Sanction for Operation and Testing.
+
+3. METHODS OF USE
+3.1. Safety Documents shall only be issued to Acceptors who are authorised to accept them.
+
+4. SAFETY PRECAUTIONS
+4.1–4.7. Preparation, release from service, advice, signing of precautions, key custody, joint control of keys, and document preparation by Safety Controller.
+
+5–8. PREPARATION DETAILS
+5. Permit for Work: identification, description, precautions, further precautions, issued items, signature/date/time.
+6. Permit ROS: as above plus which precautions may be varied and keys/procedure for restoration.
+7. Sanction for Operation & Testing: as above including removable Primary Earths and test procedure/keys.
+8. Limited Work Certificate: work location, description, limits, items issued, signature/date/time.
+
+9–13. ISSUE / TRANSFER / CLEARANCE / CANCELLATION / CATEGORIES
+9. Issue by Issuer; ROS & Sanction only by Safety Controller who is also an Issuer.
+10. Transfer rules including face‑to‑face preference and restoration to original state if not practicable.
+11. Clearance responsibilities of Acceptor.
+12. Cancellation actions of Safety Controller.
+13. Categories: Plant Controller; Safety Controller; Issuer; Appointed Person; Acceptor.`;
+
+const PART_E = `PART E - FORM OF SAFETY DOCUMENTS
+
+Standardised forms for: Limited Work Certificate, Permit for Work, Permit for Work ROS, Sanction for Operation & Testing.`;
+
+// ----------------- Simple styled wrappers -----------------
+const Page = ({ title, children, actions }) => (
+  <div className="min-h-screen bg-slate-50 text-slate-900">
+    <header className="sticky top-0 z-10 bg-white/80 backdrop-blur border-b border-slate-200">
+      <div className="max-w-5xl mx-auto px-4 py-4 flex items-center gap-3">
+        <div className="w-10 h-10 rounded-2xl bg-slate-900 text-white grid place-items-center font-bold">I</div>
+        <div className="flex-1">
+          <h1 className="text-xl font-semibold">{title}</h1>
+          <p className="text-sm text-slate-500">Rivenhall IWMF Safety Rules</p>
+        </div>
+        {actions}
+      </div>
+    </header>
+    <main className="max-w-5xl mx-auto p-4">{children}</main>
+    <footer className="max-w-5xl mx-auto px-4 pb-10 text-xs text-slate-500">
+      <hr className="my-6 border-slate-200" />
+      Built for study • Foreword & Parts A/B/C/E are verbatim and re‑formatted; Part D includes index/quick/flashcards.
+    </footer>
+  </div>
+);
+
+const Card = ({ children }) => (
+  <section className="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 md:p-6 mb-4">{children}</section>
+);
+
+const ParaBlock = ({ text }) => (
+  <div className="prose prose-slate max-w-none whitespace-pre-wrap leading-relaxed">{text}</div>
+);
+
+// ----------------- Part D views -----------------
+function IndexView({ list }) {
+  const groups = useMemo(() => {
+    const g = {};
+    for (const item of list) {
+      const k = item.term[0].toUpperCase();
+      (g[k] = g[k] || []).push(item);
     }
-    left += '<div><div class=\"letter\">' + letter + '</div><ul class=\"list\">' + itemsHtml + '</ul></div>';
-  }
+    for (const k in g) g[k].sort(byTerm);
+    return Object.entries(g).sort((a, b) => a[0].localeCompare(b[0]));
+  }, [list]);
 
-  var right = SELECTED ? (
-    '<h2>' + htmlEscape(SELECTED.term) + '</h2>' +
-    '<div class=\"prose\"><p>' + htmlEscape(SELECTED.def) + '</p></div>' +
-    '<div style=\"margin-top:10px\" class=\"actions\"><button class=\"btn-ghost\" onclick=\"copyText(' + JSON.stringify(SELECTED.term + ': ' + SELECTED.def).replace(/</g,'&lt;') + ')\">Copy</button></div>'
-  ) : '<p class=\"muted\">Pick a term from the left to view the full definition.</p>';
+  const [sel, setSel] = useState(null);
 
   return (
-    '<div class=\"grid cols-2\">' +
-      '<div class=\"card\"><h2>A–Z Index</h2><div style=\"max-height:70vh;overflow:auto;padding-right:6px\">' + left + '</div></div>' +
-      '<div class=\"card\">' + right + '</div>' +
-    '</div>'
+    <div className="grid md:grid-cols-3 gap-4">
+      <Card>
+        <h2 className="text-lg font-semibold mb-2">A–Z Index</h2>
+        <div className="space-y-3 max-h-[70vh] overflow-auto pr-1">
+          {groups.map(([letter, items]) => (
+            <div key={letter}>
+              <div className="text-xs font-semibold text-slate-500 mb-1">{letter}</div>
+              <ul className="divide-y divide-slate-100 border border-slate-200 rounded-xl overflow-hidden">
+                {items.map((x) => (
+                  <li key={x.term}>
+                    <button
+                      onClick={() => setSel(x)}
+                      className="w-full text-left px-3 py-2 hover:bg-slate-50"
+                    >
+                      <div className="font-medium break-words">{x.term}</div>
+                      <div className="text-xs text-slate-500 break-words">{x.def}</div>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </Card>
+
+      <div className="md:col-span-2">
+        <Card>
+          <div className="flex items-center justify-between gap-3 mb-3">
+            <h2 className="text-lg font-semibold">{sel ? sel.term : "Select a term"}</h2>
+            {sel && (
+              <button
+                onClick={() => navigator.clipboard.writeText(`${sel.term}: ${sel.def}`)}
+                className="text-xs px-3 py-1.5 rounded-lg border border-slate-300 hover:bg-slate-50"
+              >Copy</button>
+            )}
+          </div>
+          {sel ? (
+            <p className="text-slate-700 break-words">{sel.def}</p>
+          ) : (
+            <p className="text-slate-500">Pick a term from the left to view the full definition.</p>
+          )}
+        </Card>
+      </div>
+    </div>
   );
 }
 
-function QuickView(list){
-  var cards = "";
-  for (var i=0;i<list.length;i++){
-    var x = list[i];
-    cards += '<div class=\"card\"><div class=\"font-semibold\">' + htmlEscape(x.term) + '</div><div class=\"muted\" style=\"font-size:14px\">' + htmlEscape(x.def) + '</div></div>';
+function QuickView({ list }) {
+  return (
+    <Card>
+      <h2 className="text-lg font-semibold mb-2">Quick Reference (all definitions)</h2>
+      <div className="grid md:grid-cols-2 gap-3 max-h-[70vh] overflow-auto pr-1">
+        {list.map((x) => (
+          <div key={x.term} className="border border-slate-200 rounded-xl p-3 bg-white">
+            <div className="font-semibold break-words">{x.term}</div>
+            <div className="text-sm text-slate-700 break-words">{x.def}</div>
+          </div>
+        ))}
+      </div>
+    </Card>
+  );
+}
+
+function FlashView() {
+  const [currentIdx, setCurrentIdx] = useState(() => Math.floor(Math.random() * DEFINITIONS.length));
+  const [revealed, setRevealed] = useState(false);
+  function nextRandom() {
+    let n = Math.floor(Math.random() * DEFINITIONS.length);
+    if (n === currentIdx) n = (n + 1) % DEFINITIONS.length;
+    setCurrentIdx(n);
+    setRevealed(false);
   }
-  return '<div class=\"two-cols\">' + cards + '</div>';
+  const current = DEFINITIONS[currentIdx];
+  return (
+    <div className="max-w-2xl mx-auto">
+      <Card>
+        <div className="rounded-2xl border border-slate-300 bg-white p-6">
+          <div className="text-xs uppercase tracking-wide text-slate-500 mb-2">Term</div>
+          <div className="text-2xl font-bold break-words">{current.term}</div>
+          {revealed ? (
+            <div className="mt-4 pt-4 border-t border-slate-200">
+              <div className="text-xs uppercase tracking-wide text-slate-500 mb-1">Definition</div>
+              <div className="text-lg leading-relaxed break-words">{current.def}</div>
+            </div>
+          ) : (
+            <button onClick={() => setRevealed(true)} className="mt-6 w-full rounded-xl border border-slate-300 py-2 hover:bg-slate-50">Reveal</button>
+          )}
+        </div>
+        <div className="flex items-center justify-between mt-3 text-sm text-slate-600">
+          <span>Tip: press Next for a new random term.</span>
+          <button onClick={nextRandom} className="underline underline-offset-4">Next →</button>
+        </div>
+      </Card>
+    </div>
+  );
 }
 
-// Flashcards
-function nextCard(){
-  var n = Math.floor(Math.random()*DEFINITIONS.length);
-  if(n===currentIdx) n = (n+1)%DEFINITIONS.length;
-  currentIdx = n;
-  revealed = false;
-  render();
-}
-function reveal(){ revealed = true; render(); }
-
-function FlashView(){
-  var item = DEFINITIONS[currentIdx];
-  return '' +
-    '<div class=\"card\">' +
-      '<div class=\"flex\"><div class=\"actions\">' +
-        '<button class=\"btn-ghost\" onclick=\"nextCard()\">Next</button>' +
-        (revealed ? '' : '<button class=\"btn-primary\" onclick=\"reveal()\">Reveal</button>') +
-      '</div></div>' +
-      '<div class=\"flash-card\" style=\"margin-top:10px\">' +
-        '<div class=\"flash-label\">Definition</div>' +
-        '<div class=\"flash-def\">' + htmlEscape(item.def) + '</div>' +
-        (revealed ? ('<div style=\"margin-top:14px;padding-top:10px;border-top:1px solid var(--border)\"><div class=\"flash-label\">Answer</div><div class=\"flash-term\">' + htmlEscape(item.term) + '</div></div>') : '<button class=\"btn-ghost\" style=\"width:100%;margin-top:16px\" onclick=\"reveal()\">Tap to reveal answer</button>') +
-      '</div>' +
-      '<div class=\"flex\" style=\"margin-top:10px\"><span class=\"muted\">Tip: tap “Next” for a new random definition.</span><button class=\"btn-ghost\" onclick=\"nextCard()\">Another one →</button></div>' +
-    '</div>';
-}
-
-// ---------------- Actions ----------------
-function selectTerm(term){
-  var i;
-  SELECTED = null;
-  for (i=0;i<DEFINITIONS.length;i++){ if (DEFINITIONS[i].term===term){ SELECTED = DEFINITIONS[i]; break; } }
-  render();
-}
-function copyText(t){
-  if (navigator.clipboard && navigator.clipboard.writeText){
-    navigator.clipboard.writeText(t);
-  }
-}
-
-// ---------------- Render ----------------
-function render(){
-  var app = document.getElementById('app');
-  var list = filtered();
-  var s = document.getElementById('search');
-  if (s) s.value = QUERY;
-  var view = '';
-  if(TAB==='index') view = IndexView(list);
-  if(TAB==='quick') view = QuickView(list);
-  if(TAB==='flash') view = FlashView();
-  app.innerHTML = view;
+function PartD() {
+  const [tab, setTab] = useState("index");
+  const [query, setQuery] = useState("");
+  const filtered = useFiltered([...DEFINITIONS].sort(byTerm), query);
+  return (
+    <Page
+      title="Part D — Definitions"
+      actions={
+        <nav className="flex gap-2">
+          {[{ id: "index", label: "Index" }, { id: "quick", label: "Quick Reference" }, { id: "flash", label: "Flashcards" }].map((t) => (
+            <button
+              key={t.id}
+              onClick={() => setTab(t.id)}
+              className={
+                "px-3 py-2 rounded-xl text-sm font-medium border " +
+                (tab === t.id ? "bg-slate-900 text-white border-slate-900" : "bg-white text-slate-700 border-slate-200 hover:bg-slate-100")
+              }
+            >
+              {t.label}
+            </button>
+          ))}
+        </nav>
+      }
+    >
+      {tab !== "flash" && (
+        <div className="bg-white border border-slate-200 rounded-2xl p-3 mb-4">
+          <input
+            type="text"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            className="w-full rounded-xl border border-slate-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-slate-400"
+            placeholder="Search terms or definitions…"
+          />
+        </div>
+      )}
+      {tab === "index" && <IndexView list={filtered} />}
+      {tab === "quick" && <QuickView list={filtered} />}
+      {tab === "flash" && <FlashView />}
+    </Page>
+  );
 }
 
-// Tab click handler
-document.addEventListener('click', function(e){
-  var btn = e.target;
-  while (btn && btn.tagName !== 'BUTTON'){ btn = btn.parentElement; }
-  if(btn && btn.classList.contains('btn')){
-    setTab(btn.getAttribute('data-tab'));
-  }
-});
-
-// Search
-document.addEventListener('DOMContentLoaded', function(){
-  var input = document.getElementById('search');
-  if (input){
-    input.addEventListener('input', function(e){ setQuery(e.target.value); });
-  }
-});
-
-// Initial tab from hash
-function initFromHash(){
-  var h = (location.hash || '').replace('#','');
-  if (h==='quick' || h==='flash' || h==='index'){ TAB = h; } else { TAB = 'index'; }
-  var buttons = document.querySelectorAll('nav .btn');
-  for (var i=0;i<buttons.length;i++){
-    var b = buttons[i];
-    b.classList.toggle('active', b.getAttribute('data-tab')===TAB);
-  }
-  document.getElementById('searchbar').style.display = (TAB==="flash") ? "none" : "block";
-  render();
+// ----------------- Pages -----------------
+function Home({ go }) {
+  const Link = ({ to, children }) => (
+    <button onClick={() => go(to)} className="px-4 py-3 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 w-full text-left">
+      <div className="text-base font-semibold">{children}</div>
+      <div className="text-xs text-slate-500">Open section</div>
+    </button>
+  );
+  return (
+    <Page title="Home">
+      <Card>
+        <h2 className="text-lg font-semibold mb-2">Sections</h2>
+        <div className="grid md:grid-cols-2 gap-3">
+          <Link to="foreword">Foreword</Link>
+          <Link to="part-a">Part A — General Provisions</Link>
+          <Link to="part-b">Part B — Basic Safety Rules</Link>
+          <Link to="part-c">Part C — Safety Document Procedures</Link>
+          <Link to="part-d">Part D — Definitions</Link>
+          <Link to="part-e">Part E — Forms of Safety Documents</Link>
+        </div>
+      </Card>
+    </Page>
+  );
 }
-window.addEventListener('hashchange', initFromHash);
 
-// init
-initFromHash();
-</script>
-</body>
-</html>
+function TextPage({ title, text }) {
+  return (
+    <Page title={title} actions={<button onClick={() => (window.location.hash = "#home")} className="px-3 py-2 rounded-xl text-sm border border-slate-200">Home</button>}>
+      <Card>
+        <ParaBlock text={text} />
+      </Card>
+    </Page>
+  );
+}
+
+// ----------------- App (router) -----------------
+export default function App() {
+  const [hash, go] = useHash("home");
+  if (hash === "home") return <Home go={go} />;
+  if (hash === "foreword") return <TextPage title="Foreword" text={FOREWORD} />;
+  if (hash === "part-a") return <TextPage title="Part A — General Provisions" text={PART_A} />;
+  if (hash === "part-b") return <TextPage title="Part B — Basic Safety Rules" text={PART_B} />;
+  if (hash === "part-c") return <TextPage title="Part C — Safety Document Procedures" text={PART_C} />;
+  if (hash === "part-d") return <PartD />;
+  if (hash === "part-e") return <TextPage title="Part E — Forms of Safety Documents" text={PART_E} />;
+  return <Home go={go} />;
+}
